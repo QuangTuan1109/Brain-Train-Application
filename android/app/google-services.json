@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "320227757265",
+    "project_id": "brain-train-ac749",
+    "storage_bucket": "brain-train-ac749.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320227757265:android:3298a00f862e34450649f0",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320227757265-cpsdk726jodaqdq67jn31mn6aoncf9sl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4ol3svNLVVLPsHQYmkWzFGJVzSR-hxX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320227757265-cpsdk726jodaqdq67jn31mn6aoncf9sl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
