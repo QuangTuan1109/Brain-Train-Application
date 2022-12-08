@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: futureAuth.when(data: (data) {
-          return auth.isAuth ? SigninScreen() : Homepage();
+          return auth.isAuth ? Homepage() : SigninScreen();
         }, error: (e, st) {
           return Scaffold(
             body: Center(child: Text(e.toString())),
