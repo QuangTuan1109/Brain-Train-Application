@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animator/animator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_application_1/general/app_route.dart';
 import 'package:flutter_application_1/provider/auth.dart';
 import 'package:flutter_application_1/screens/home/leader.dart';
 import 'package:flutter_application_1/screens/home/stack_custom.dart';
@@ -114,13 +115,14 @@ class LanguageScreen extends ConsumerWidget {
                       padding: const EdgeInsets.only(top: 25),
                       child: InkWell(
                         onTap: () {
-                          Navigator.of(context).pushNamed('AppRoute.levels');
+                          Navigator.of(context)
+                              .pushNamed(RouteGenerator.gameLetter);
                         },
                         child: const CustomStack(
                           image: 'images/shoping-math-game.jpg',
                           icon: 'images/shoping-math-game-icon.jpg',
-                          text1: 'Trò Chơi Mua Sắm',
-                          text2: '4 Trò Chơi',
+                          text1: 'Tìm từ bắt đầu với',
+                          text2: '',
                           padding_left: 5,
                           padding_top: 45,
                           padding: 0,
@@ -131,13 +133,45 @@ class LanguageScreen extends ConsumerWidget {
                     InkWell(
                       onTap: () {
                         Navigator.of(context)
-                            .pushNamed('AppRoute.multiplayerSearch');
+                            .pushNamed(RouteGenerator.gameWord);
                       },
                       child: const CustomStack(
                         image: 'images/plus-math-game-background.png',
                         icon: 'images/plus-math-game-icon.png',
-                        text1: 'Trò Chơi Tìm Tổng',
-                        text2: '4 Trò Chơi',
+                        text1: 'Tìm từ tiếp theo',
+                        text2: '',
+                        padding_left: 7,
+                        padding_top: 80,
+                        padding: 28,
+                        color: Color(0xff444444),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed(RouteGenerator.gameConj);
+                      },
+                      child: const CustomStack(
+                        image: 'images/plus-math-game-background.png',
+                        icon: 'images/plus-math-game-icon.png',
+                        text1: 'Nối Từ',
+                        text2: '',
+                        padding_left: 7,
+                        padding_top: 80,
+                        padding: 28,
+                        color: Color(0xff444444),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed(RouteGenerator.gameSort);
+                      },
+                      child: const CustomStack(
+                        image: 'images/plus-math-game-background.png',
+                        icon: 'images/plus-math-game-icon.png',
+                        text1: 'Sắp xếp từ',
+                        text2: '',
                         padding_left: 7,
                         padding_top: 80,
                         padding: 28,

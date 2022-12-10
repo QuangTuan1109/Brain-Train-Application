@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -20,7 +20,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: ">=2.18.2 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -33,11 +33,11 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_riverpod: ^2.1.1
+  word_search: ^0.1.2
   firebase_auth: ^4.1.4
   firebase_core: ^2.3.0
   firebase_database: ^10.0.6
@@ -45,6 +45,13 @@ dependencies:
   google_sign_in: ^5.4.2
   animator: ^3.2.0
   carousel_slider: ^4.1.1
+  http: ^0.13.5
+  fluttertoast: ^8.1.1
+  characters: ^1.2.1
+  concentric_transition: ^1.0.3
+  flutter_svg: ^1.1.5
+  flutter_custom_clippers: ^2.0.0
+  animate_do: ^1.7.5
 
 dev_dependencies:
   flutter_test:
@@ -68,7 +75,6 @@ flutter_icons:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -77,6 +83,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
+    - lib/data/data_language/question_languages_one.json
+    - lib/data/data_language/question_languages_two.json
+    - lib/data/data_language/word.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
