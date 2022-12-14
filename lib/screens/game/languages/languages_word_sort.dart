@@ -88,186 +88,314 @@ class _WordFindWidgetState extends State<WordFindWidget> {
     WordFindQues currentQues = listQuestions[indexQues];
     // print(currentQues);
     var test = int.parse(currentQues.count);
+    // ignore: unnecessary_type_check
     assert(test is int);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sắp xếp Từ'),
-        backgroundColor: Colors.yellow[600],
-      ),
-      body: Container(
-        width: double.maxFinite,
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          width: double.maxFinite,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+          ),
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              const Positioned(
+                left: -230,
+                right: -5,
+                child: Image(
+                  image: AssetImage('assets/images/cat-sleep.gif'),
+                  height: 200,
+                  width: 400,
+                  //   width:400,
+                ),
+              ),
+
+              // SvgPicture.asset(
+              //   'assets/images/business-lady-do-multi-tasking.svg',
+              //   // fit: BoxFit.fitHeight,
+              //   height:200,
+              //   width:400,
+              // ),
+              Column(
                 children: [
-                  Row(
-                    children: [
-                      InkWell(
-                        onTap: () => generateHint(),
-                        child: Icon(
-                          Icons.tungsten_outlined,
-                          size: 45,
-                          color: Colors.yellow[900],
+                  Container(
+                    // margin: const EdgeInsets.all(16),
+                    height: 450,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 16),
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Color(0xFFFFD740), Color(0xFFF9A825)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
+                      ),
+                    ),
+                    child: Scaffold(
+                      backgroundColor: Colors.transparent,
+                      // height:300,
+                      body: SingleChildScrollView(
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 6, horizontal: 2),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(10),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () => generateHint(),
+                                                    child: Icon(
+                                                      Icons.tungsten_outlined,
+                                                      size: 45,
+                                                      color: Colors.yellow[900],
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      currentQues.isDone =
+                                                          false;
+                                                      generatePuzzle(
+                                                          next: true);
+                                                      currentQues.isFull =
+                                                          false;
+                                                    },
+                                                    child: Icon(
+                                                      Icons.sync_outlined,
+                                                      size: 45,
+                                                      color: Colors.yellow[900],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () => generatePuzzle(
+                                                        left: true),
+                                                    child: Icon(
+                                                      Icons.arrow_back_ios,
+                                                      size: 45,
+                                                      color: Colors.yellow[900],
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () => generatePuzzle(
+                                                        next: true),
+                                                    child: Icon(
+                                                      Icons.arrow_forward_ios,
+                                                      size: 45,
+                                                      color: Colors.yellow[900],
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(10),
+                                          margin: EdgeInsets.fromLTRB(
+                                              30, 55, 50, 70),
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            textAlign: TextAlign.center,
+                                            "${currentQues.question ?? ''}",
+                                            style: const TextStyle(
+                                              fontSize: 25,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 30, horizontal: 10),
+                                          alignment: Alignment.center,
+                                          child: LayoutBuilder(
+                                            builder: (context, constraints) {
+                                              return Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: currentQues.puzzles
+                                                    .map((puzzle) {
+                                                  // later change color based condition
+                                                  Color? color;
+
+                                                  if (currentQues.isDone)
+                                                    color = Colors.green[600];
+                                                  else if (puzzle.hintShow) {
+                                                    color = Colors.green[600];
+                                                  } else if (currentQues
+                                                      .isFull) {
+                                                    color = Colors.red;
+                                                  } else {
+                                                    color = Colors.white;
+                                                  }
+
+                                                  return InkWell(
+                                                    onTap: () {
+                                                      if (puzzle.hintShow ||
+                                                          currentQues.isDone)
+                                                        return;
+                                                      currentQues.isFull =
+                                                          false;
+                                                      // currentQues.isDone = false;
+                                                      puzzle.clearValue();
+                                                      setState(() {});
+                                                    },
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                        color: color,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                      width: constraints.biggest
+                                                                  .width /
+                                                              test -
+                                                          6,
+                                                      height: constraints
+                                                              .biggest.width /
+                                                          8,
+                                                      margin: EdgeInsets.all(3),
+                                                      child: Text(
+                                                        "${puzzle.currentValue ?? ''}"
+                                                            .toUpperCase(),
+                                                        style: TextStyle(
+                                                          fontSize: 25,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                }).toList(),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          currentQues.isDone = false;
-                          generatePuzzle(next: true);
-                          currentQues.isFull = false;
-                        },
-                        child: Icon(
-                          Icons.sync_outlined,
-                          size: 45,
-                          color: Colors.yellow[900],
+                    ),
+                  ),
+                  Container(
+                    // Add the line below
+                    margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                    // padding: const EdgeInsets.all(16),
+                    clipBehavior: Clip.hardEdge,
+                    height: 10,
+                    decoration: const BoxDecoration(
+                      color: Color(0xffffe0b2),
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(40),
+                        bottomLeft: Radius.circular(40),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    // Add the line below
+                    margin: const EdgeInsets.only(left: 35.0, right: 35.0),
+                    clipBehavior: Clip.hardEdge,
+                    height: 10,
+                    decoration: const BoxDecoration(
+                      color: Color(0xfffff3e0),
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 100),
+                  Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        alignment: Alignment.center,
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: 1,
+                            crossAxisCount: test,
+                            crossAxisSpacing: 3,
+                            mainAxisSpacing: 4,
+                          ),
+                          itemCount: test, // later change
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            bool statusBtn = currentQues.puzzles.indexWhere(
+                                    (puzzle) => puzzle.currentIndex == index) >=
+                                0;
+
+                            return LayoutBuilder(
+                              builder: (context, constraints) {
+                                Color color = statusBtn
+                                    ? Color(0xFFFFD600)
+                                    : Color(0xFFFFFD9D);
+
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: color,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  // margin: ,
+                                  alignment: Alignment.center,
+                                  child: TextButton(
+                                    // height: constraints.biggest.height,
+                                    child: Text(
+                                      "${currentQues.arrayBtns[index]}"
+                                          .toUpperCase(),
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      if (!statusBtn) setBtnClick(index);
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          },
                         ),
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      InkWell(
-                        onTap: () => generatePuzzle(left: true),
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          size: 45,
-                          color: Colors.yellow[900],
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () => generatePuzzle(next: true),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 45,
-                          color: Colors.yellow[900],
-                        ),
-                      ),
-                    ],
-                  )
                 ],
               ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.fromLTRB(30, 55, 50, 70),
-              alignment: Alignment.center,
-              child: Text(
-                textAlign: TextAlign.center,
-                "${currentQues.question ?? ''}",
-                style: const TextStyle(
-                  fontSize: 25,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-              alignment: Alignment.center,
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: currentQues.puzzles.map((puzzle) {
-                      // later change color based condition
-                      Color? color;
-
-                      if (currentQues.isDone)
-                        color = Colors.green[600];
-                      else if (puzzle.hintShow) {
-                        color = Colors.green[600];
-                      } else if (currentQues.isFull) {
-                        color = Colors.red;
-                      } else {
-                        color = Colors.yellow;
-                      }
-
-                      return InkWell(
-                        onTap: () {
-                          if (puzzle.hintShow || currentQues.isDone) return;
-                          currentQues.isFull = false;
-                          // currentQues.isDone = false;
-                          puzzle.clearValue();
-                          setState(() {});
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: color,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          width: constraints.biggest.width / test - 6,
-                          height: constraints.biggest.width / 8,
-                          margin: EdgeInsets.all(3),
-                          child: Text(
-                            "${puzzle.currentValue ?? ''}".toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              alignment: Alignment.center,
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 1,
-                  crossAxisCount: test,
-                  crossAxisSpacing: 3,
-                  mainAxisSpacing: 4,
-                ),
-                itemCount: test, // later change
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  bool statusBtn = currentQues.puzzles.indexWhere(
-                          (puzzle) => puzzle.currentIndex == index) >=
-                      0;
-
-                  return LayoutBuilder(
-                    builder: (context, constraints) {
-                      Color color =
-                          statusBtn ? Color(0xFFFFD600) : Color(0xFFFFFD9D);
-
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: color,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        // margin: ,
-                        alignment: Alignment.center,
-                        child: TextButton(
-                          // height: constraints.biggest.height,
-                          child: Text(
-                            "${currentQues.arrayBtns[index]}".toUpperCase(),
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          onPressed: () {
-                            if (!statusBtn) setBtnClick(index);
-                          },
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
