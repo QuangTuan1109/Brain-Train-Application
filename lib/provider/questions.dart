@@ -4,18 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/data/data_question_math1.dart';
 import 'package:flutter_application_1/models/questions_math1_model.dart';
 
-/*
-**********COMMENT CODE QUESTIONS PROVIDER**********
-
-  - Declare enum AnswerCardStatus include 4 status for answers. 
-  - One question will have attributes: 
-    + Current level (The round of each questions).
-    + Current question index: Identify the index of question in data_question_math1.dart (Having 100 questions).
-    + Current question answer index: Identify the index of answer for each question. Each question has 2 answer.
-    + isFisnish called when finish game. Initial value is FALSE (It mean that hasn't finish yet).
-    + Current score: Score of phayer through each round.
- */
-
 enum AnswerCardStatus { normal, disable, erorr, right }
 
 class Questions extends ChangeNotifier {

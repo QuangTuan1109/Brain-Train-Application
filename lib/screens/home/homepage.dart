@@ -66,7 +66,7 @@ class Homepage extends ConsumerWidget {
                     ),
                     IconButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed('AppRoute.settings');
+                        Navigator.of(context).pushNamed(RouteGenerator.setting);
                       },
                       icon: const Icon(Icons.settings),
                       color: Colors.black,

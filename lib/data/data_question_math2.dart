@@ -1,0 +1,32 @@
+const data_question_math2 = [
+  {
+    "level": 1,
+    "question": "Chọn 2 số có tổng bằng 10",
+    "round": 1,
+    "answer": "5, 4, 3, 8, 7",
+    "rightAnswerIndex1": 3,
+    "rightAnswerIndex2": 5,
+    "point": 200,
+    "time": 10,
+  },
+  {
+    "level": 1,
+    "question": "Chọn 2 số có tổng bằng 10",
+    "round": 2,
+    "answer": "6, 3, 8, 1, 4",
+    "rightAnswerIndex1": 1,
+    "rightAnswerIndex2": 5,
+    "point": 200,
+    "time": 10,
+  },
+  {
+    "level": 1,
+    "question": "Chọn 2 số có tổng bằng 10",
+    "round": 3,
+    "answer": "8, 9, 7, 1, 6",
+    "rightAnswerIndex1": 2,
+    "rightAnswerIndex2": 4,
+    "point": 200,
+    "time": 10,
+  },
+];

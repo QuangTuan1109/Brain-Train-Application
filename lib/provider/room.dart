@@ -3,7 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/data_question_math1.dart';
+import 'package:flutter_application_1/data/data_question_math2.dart';
 import 'package:flutter_application_1/models/questions_math1_model.dart';
+import 'package:flutter_application_1/models/questions_math2_model.dart';
 import 'package:flutter_application_1/models/roomMathGameModel.dart';
 import 'package:flutter_application_1/models/user_model.dart';
 import 'package:flutter_application_1/provider/auth.dart';
@@ -29,6 +31,7 @@ class RoomNotifier extends ChangeNotifier {
   int currentSeconds = 0;
   int? indexCurrentAnswer;
   int currentScore = 0;
+  int indexRightAnswerTime = 0;
 
   // Colors of status after answer
   Color get borderColor {
@@ -43,17 +46,45 @@ class RoomNotifier extends ChangeNotifier {
     }
   }
 
-  // Get question in data file
+  // Get question of game math 1 in data file
   Questions_Math1_model get currentQuestion =>
       questionsList[currentQuestionIndex];
 
   List<String> get currentAnswers => currentQuestion.answerList;
+
+  // Get question of game math 1 in data file
+  Questions_Math2_model get currentQuestionMath2 =>
+      questionsListGameMath2[currentQuestionIndex];
+
+  List<String> get currentAnswersGameMath2 => currentQuestionMath2.answerList;
+
+  // List all questions in data file
+  List<Questions_Math2_model> get questionsListGameMath2 => data_question_math2
+      .sublist(0, 3)
+      .map((q) => Questions_Math2_model.fromMap(q))
+      .toList();
 
   // List all questions in data file
   List<Questions_Math1_model> get questionsList => data_question_math1
       .sublist(0, 100)
       .map((q) => Questions_Math1_model.fromMap(q))
       .toList();
+
+  // The status of answer
+  List<AnswerCardStatus> get answersStatusGameMath2 {
+    if (isAnswerChosen) {
+      return List.generate(currentAnswersGameMath2.length, (index) {
+        if (index == currentQuestion.rightAnswerIndex - 1) {
+          return AnswerCardStatus.right;
+        }
+        return AnswerCardStatus.disable;
+      });
+    } else {
+      return List.generate(currentAnswersGameMath2.length, (index) {
+        return AnswerCardStatus.normal;
+      });
+    }
+  }
 
   // The status of answer
   List<AnswerCardStatus> get answersStatus {
@@ -130,27 +161,16 @@ class RoomNotifier extends ChangeNotifier {
     notifyListeners();
 
     // Handle time
-    int indexRightAnswerTime = 0;
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (isRightAns) {
-        indexRightAnswerTime++;
-      } else {
-        indexRightAnswerTime = 0;
-      }
-
-      if (indexRightAnswerTime == 5 && indexRightAnswerTime != 0) {
-        seconds + 10;
-      } else if (!isRightAns) {
-        seconds - 2;
-      }
-
-      if (seconds == 0) {
-        timer.cancel();
-      } else {
-        seconds--;
-      }
-      notifyListeners();
-    });
+    if (isRightAns) {
+      indexRightAnswerTime++;
+    } else {
+      indexRightAnswerTime = 0;
+    }
+    if (indexRightAnswerTime % 5 == 0 && indexRightAnswerTime != 0) {
+      seconds += 10;
+    } else if (!isRightAns) {
+      seconds -= 2;
+    }
 
     // Handle Score
     if (isRightAns) {

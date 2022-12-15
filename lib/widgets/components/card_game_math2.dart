@@ -42,8 +42,8 @@ Color bgrColor(AnswerCardStatus answerCardStatus) {
   }
 }
 
-class GameCard extends ConsumerWidget {
-  const GameCard({
+class GameCard2 extends ConsumerWidget {
+  const GameCard2({
     super.key,
     required this.answer,
     required this.answerCardStatus,
@@ -60,15 +60,16 @@ class GameCard extends ConsumerWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(microseconds: 100),
-        margin:
-            const EdgeInsets.only(top: 20, bottom: 100, left: 20, right: 20),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
-        decoration: BoxDecoration(
+        margin: const EdgeInsets.only(bottom: 30, top: 10),
+        //padding: const EdgeInsets.only(bottom: 10),
+        decoration: ShapeDecoration(
             color: bgrColor(answerCardStatus),
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: borderColor(answerCardStatus), width: 3)),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            shape: CircleBorder(
+                side: BorderSide(
+              color: borderColor(answerCardStatus),
+              width: 3,
+            ))),
+        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           Expanded(
               child: Text(
             answer,

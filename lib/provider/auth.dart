@@ -172,19 +172,19 @@ class Auth with ChangeNotifier {
     } catch (e) {
       print(e);
     }
+  }
 
-    //Logout
-    Future<void> logout() async {
-      final prefs = await SharedPreferences.getInstance();
+  //Logout
+  Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
 
-      if (user.isGoogleSignin) await GoogleSignIn().signOut();
-      if (user.isEmailSignin) await FirebaseAuth.instance.signOut();
+    if (user.isGoogleSignin) await GoogleSignIn().signOut();
+    if (user.isEmailSignin) await FirebaseAuth.instance.signOut();
 
-      user.clearUser();
+    user.clearUser();
 
-      prefs.remove('user');
+    prefs.remove('user');
 
-      notifyListeners();
-    }
+    notifyListeners();
   }
 }
