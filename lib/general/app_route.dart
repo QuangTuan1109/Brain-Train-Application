@@ -10,6 +10,12 @@ import 'package:flutter_application_1/screens/game/languages/languages_conjuncti
 import 'package:flutter_application_1/screens/game/languages/languages_first_word.dart';
 import 'package:flutter_application_1/screens/game/languages/languages_word_sort.dart';
 
+//Admin
+import 'package:flutter_application_1/screens/admin/admin_page.dart';
+import 'package:flutter_application_1/screens/admin/admin_page copy.dart';
+
+//popup
+
 class RouteGenerator {
   const RouteGenerator._();
 
@@ -26,6 +32,12 @@ class RouteGenerator {
   static const gameConj = '/gameConj';
   static const gameSort = '/gameSort';
 
+  //popup
+  static const walkthrough_screen = '/walkthrough_screen';
+  //admin_page
+  static const admin_page = '/admin_page';
+  static const admin_page2 = '/admin_page2';
+
   static final routes = {
     signin: (context) => const SigninScreen(),
     signup: (context) => const SignupScreen(),
@@ -39,5 +51,9 @@ class RouteGenerator {
     gameWord: (context) => const LanguagesFirstWord(),
     gameConj: (context) => const LanguageGameThree(),
     gameSort: (context) => const WordFind(),
+
+    //admin
+    admin_page: (context) => FilterLocalListPage(),
+    admin_page2: (context) => const Homepage2(),
   };
 }

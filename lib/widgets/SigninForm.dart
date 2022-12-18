@@ -103,7 +103,7 @@ class _SigninFormState extends State<SigninForm> {
                     isSubmitted = true;
                   });
                   if (emailErrorText != null || passwordErrorText != null) {
-                    Navigator.of(context).pushNamed('/homepage');
+                    Navigator.of(context).pushNamed('/admin_page2');
                   }
                 },
                 text: 'Đăng Nhập');
