@@ -58,6 +58,7 @@ dependencies:
   liquid_swipe: ^3.0.0
   smooth_page_indicator: ^1.0.0+2
   get: ^4.6.5
+  percent_indicator: ^4.2.2
 
 dev_dependencies:
   flutter_test:
@@ -90,6 +91,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
+    - assets/gif/
     - lib/data/data_language/question_languages_one.json
     - lib/data/data_language/question_languages_two.json
     - lib/data/data_language/word.json

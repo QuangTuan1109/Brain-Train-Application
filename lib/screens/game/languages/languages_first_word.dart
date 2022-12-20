@@ -1,12 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/data/data_onborad/data_languages_2.dart';
+import 'package:flutter_application_1/theme_color/light_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/general/check_languages.dart';
 import 'package:flutter_application_1/widgets/components/toast.dart';
+import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../widgets/components/custom_button.dart';
 
@@ -23,7 +28,10 @@ class _LanguagesFirstWordState extends State<LanguagesFirstWord> {
   List<String> _firstWord = [""];
   String wordInput = "";
   int statusCode = 0;
+  bool stopTime = false;
   int numberWord = 0;
+  bool back = false;
+  int reduceSecondsBy = 1;
   int score = 0;
   String firstWord = "";
   int currentIndex = 0;
@@ -63,7 +71,11 @@ class _LanguagesFirstWordState extends State<LanguagesFirstWord> {
   }
 
   void setCountDown() {
-    const reduceSecondsBy = 1;
+    if (stopTime == false) {
+      reduceSecondsBy = 1;
+    } else {
+      reduceSecondsBy = 0;
+    }
     setState(() {
       final seconds = timeDuration.inSeconds - reduceSecondsBy;
       if (seconds < 0) {
@@ -141,6 +153,58 @@ class _LanguagesFirstWordState extends State<LanguagesFirstWord> {
     if (wordInput.isNotEmpty) {
       handleClickCheck();
     }
+  }
+
+  Future<void> _dialogBuilderTwo(BuildContext context) {
+    final obController = OnBoardingLanguageTwo();
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) => WillPopScope(
+        onWillPop: () async {
+          // final back = await showMyDialog(context);
+          return false;
+        },
+        child: Scaffold(
+          body: Stack(
+            alignment: Alignment.center,
+            children: [
+              LiquidSwipe(
+                pages: obController.pages,
+                enableSideReveal: true,
+                liquidController: obController.controller,
+                onPageChangeCallback: obController.onPageChangedCallback,
+                slideIconWidget: const Icon(Icons.arrow_back_ios),
+                waveType: WaveType.liquidReveal,
+              ),
+              Positioned(
+                top: 50,
+                right: 20,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    stopTime = false;
+                  },
+                  child:
+                      const Text("Skip", style: TextStyle(color: Colors.grey)),
+                ),
+              ),
+              Obx(
+                () => Positioned(
+                  bottom: 10,
+                  child: AnimatedSmoothIndicator(
+                    count: 3,
+                    activeIndex: obController.currentPage.value,
+                    effect: const ExpandingDotsEffect(
+                      activeDotColor: Color(0xff272727),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Future<void> _showNotify(
@@ -257,28 +321,53 @@ class _LanguagesFirstWordState extends State<LanguagesFirstWord> {
     );
   }
 
+  Future<bool?> showMyDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Bạn có muốn thoát ra ?'),
+          actions: [
+            TextButton(
+              child: Text('Không'),
+              onPressed: () {
+                back = false;
+                Navigator.pop(context, back);
+              },
+            ),
+            TextButton(
+              child: Text('Có'),
+              onPressed: () {
+                back = true;
+                Navigator.pop(context, back);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return WillPopScope(
+      onWillPop: () async {
+        final back = await showMyDialog(context);
+        return back ?? false;
+      },
       child: Scaffold(
         body: Container(
           decoration: const BoxDecoration(
-            // gradient: LinearGradient(
-            //   colors: [Color(0xFFFFD740), Color(0xFFF9A825)],
-            //   begin: Alignment.topLeft,
-            //   end: Alignment.bottomRight,
-            // ),
-            color: Colors.white,
+            color: LightColors.kLightYellow,
           ),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
               const Positioned(
-                bottom: -35,
-                left: -5,
-                right: -290,
+                left: -290,
+                right: -5,
                 child: Image(
-                  image: AssetImage('assets/images/cat-angry.gif'),
+                  image: AssetImage('assets/images/cat.gif'),
                   height: 200,
                   width: 400,
                   //   width:400,
@@ -293,143 +382,196 @@ class _LanguagesFirstWordState extends State<LanguagesFirstWord> {
               // ),
               Column(
                 children: [
-                  Container(
-                    // margin: const EdgeInsets.all(16),
-                    height: 350,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 16),
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFFFFD740), Color(0xFFF9A825)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      // margin: const EdgeInsets.all(16),
+                      height: 350,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 16),
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Color(0xFFFFD740), Color(0xFFF9A825)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                        ),
                       ),
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(20),
-                        bottomLeft: Radius.circular(20),
-                      ),
-                    ),
-                    child: Scaffold(
-                      backgroundColor: Colors.transparent,
-                      // height:300,
-                      body: SingleChildScrollView(
-                        child: Center(
-                          child: Column(
-                            children: [
-                              // const Padding(
-                              //   padding: EdgeInsets.all(10),
-                              //   child: Text(
-                              //     'Language',
-                              //     style: TextStyle(
-                              //       color: Colors.green,
-                              //       fontSize: 34,
-                              //     ),
-                              //   ),
-                              // ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                height: 30,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: Colors.white,
-                                ),
-                                child: Stack(
-                                  alignment: Alignment.centerLeft,
-                                  children: [
-                                    Consumer(
-                                      builder: (context, ref, child) {
-                                        // final questions = ref.watch(questionsProvider);
-                                        return FractionallySizedBox(
-                                          alignment: Alignment.centerLeft,
-                                          widthFactor: timeDuration.inSeconds /
-                                              answerDurationInSeconds,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              color: Colors.green[300],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                    // Image.asset(
-                                    //   'assets/images/slow-loading.png',
-                                    //   width: 3980,
-                                    //   height:400,
-                                    // ),
-                                    Positioned(
-                                      left: 10,
-                                      child: Consumer(
-                                        builder: (context, ref, child) {
-                                          return Text(
-                                              '${timeDuration.inSeconds} seconds');
-                                        },
-                                      ),
-                                    ),
-                                    const Positioned(
-                                      right: 10,
-                                      child: Icon(
-                                        Icons.timer,
-                                        size: 18,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 6, horizontal: 2),
-                                    child: Container(
-                                      margin: const EdgeInsets.all(16),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 6, horizontal: 22),
-                                      height: 250,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Column(
+                      child: Scaffold(
+                        backgroundColor: Colors.transparent,
+                        // height:300,
+                        body: Container(
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              top: 70,
-                                              bottom: 10,
+                                          IconButton(
+                                            onPressed: () async {
+                                              final back =
+                                                  await showMyDialog(context);
+                                              if (back == true) {
+                                                Navigator.pop(context, back);
+                                              }
+                                            },
+                                            icon: const Icon(
+                                              Icons.arrow_circle_left_outlined,
+                                              size: 40,
                                             ),
-                                            child: Text(
-                                                "Nhập từ thích hợp bắt đầu bằng chữ $firstWord : ",
-                                                textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black,
-                                                    fontSize: 20)),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 20, bottom: 20),
-                                            child: Text(
-                                                wordInput == ""
-                                                    ? "$firstWord _____"
-                                                    : "$firstWord $wordInput",
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black,
-                                                    fontSize: 30)),
+                                            color: Colors.black,
                                           ),
                                         ],
                                       ),
-                                    ),
+                                      Row(
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              _dialogBuilderTwo(context);
+                                              stopTime = true;
+                                            },
+                                            icon: const Icon(
+                                              Icons.question_mark_rounded,
+                                              size: 35,
+                                            ),
+                                            color: Colors.black,
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              stopTime = true;
+                                              _dialogBuilderTwo(context);
+                                            },
+                                            icon: const Icon(
+                                              Icons.settings,
+                                              size: 35,
+                                            ),
+                                            color: Colors.black,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ],
+                                ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  height: 30,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: LightColors.kLightYellow,
+                                  ),
+                                  child: Stack(
+                                    alignment: Alignment.centerLeft,
+                                    children: [
+                                      Consumer(
+                                        builder: (context, ref, child) {
+                                          // final questions = ref.watch(questionsProvider);
+                                          return FractionallySizedBox(
+                                            alignment: Alignment.centerLeft,
+                                            widthFactor:
+                                                timeDuration.inSeconds /
+                                                    answerDurationInSeconds,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                                color: LightColors.kDarkGreen,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      Positioned(
+                                        left: 10,
+                                        child: Consumer(
+                                          builder: (context, ref, child) {
+                                            return Text(
+                                                '${timeDuration.inSeconds} seconds');
+                                          },
+                                        ),
+                                      ),
+                                      const Positioned(
+                                        right: 10,
+                                        child: Icon(
+                                          Icons.timer,
+                                          size: 18,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(
+                                          margin: const EdgeInsets.only(
+                                            top: 20,
+                                            bottom: 20,
+                                            left: 20,
+                                            right: 20,
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 6, horizontal: 22),
+                                          height: 200,
+                                          decoration: BoxDecoration(
+                                            color: LightColors.kLightYellow,
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 30,
+                                                  bottom: 10,
+                                                ),
+                                                child: Text(
+                                                    "Nhập từ thích hợp bắt đầu bằng chữ $firstWord : ",
+                                                    textAlign: TextAlign.center,
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black,
+                                                        fontSize: 20)),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 20, bottom: 20),
+                                                child: Text(
+                                                    wordInput == ""
+                                                        ? "$firstWord _____"
+                                                        : "$firstWord $wordInput",
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black,
+                                                        fontSize: 30)),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -463,47 +605,48 @@ class _LanguagesFirstWordState extends State<LanguagesFirstWord> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Column(
-                    children: [
-                      SizedBox(
-                        width: 200,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 5, bottom: 10),
-                          child: TextField(
-                            controller: controllerInput,
-                            textAlign: TextAlign.center,
-                            onChanged: (text) {
-                              setState(() {
-                                wordInput = text;
-                              });
-                            },
-                            decoration: const InputDecoration(
-                              // border: OutlineInputBorder(
-                              //   borderRadius: BorderRadius.all(Radius.circular(30)),
-                              // ),
-                              hintText: "nhập từ ở đây",
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 200,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            child: TextField(
+                              controller: controllerInput,
+                              textAlign: TextAlign.center,
+                              maxLength: 7,
+                              onChanged: (text) {
+                                setState(() {
+                                  wordInput = text;
+                                });
+                              },
+                              decoration: const InputDecoration(
+                                hintText: "nhập từ ở đây",
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(top: 20, bottom: 10),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              handleCheckResult();
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.yellow[600],
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 40, vertical: 14),
-                                textStyle: const TextStyle(fontSize: 24)),
-                            child: const Text('Gửi',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 20)),
-                          )),
-                    ],
+                        Padding(
+                            padding: const EdgeInsets.only(top: 20, bottom: 10),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                handleCheckResult();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.yellow[600],
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 40, vertical: 14),
+                                  textStyle: const TextStyle(fontSize: 24)),
+                              child: const Text('Gửi',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 20)),
+                            )),
+                      ],
+                    ),
                   ),
                 ],
               ),

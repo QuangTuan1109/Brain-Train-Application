@@ -1,13 +1,18 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/data/data_onborad/data_languages_3.dart';
+import 'package:flutter_application_1/theme_color/light_colors.dart';
 import 'package:flutter_application_1/widgets/components/custom_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter_application_1/general/check_languages.dart';
 import 'package:flutter_application_1/widgets/components/toast.dart';
+import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class LanguageGameThree extends StatefulWidget {
   const LanguageGameThree({super.key});
@@ -24,6 +29,9 @@ class _LanguageGameThreeState extends State<LanguageGameThree> {
   Duration answerDuration = const Duration();
   Timer? countdownTimer;
   int numberWord = 0;
+  bool stopTime = false;
+  bool back = false;
+  int reduceSecondsBy = 1;
   TextEditingController controller = TextEditingController();
   late Future<String> firstCharacter;
   List<String> _answer = [' ', ' ', ' '];
@@ -39,7 +47,11 @@ class _LanguageGameThreeState extends State<LanguageGameThree> {
   }
 
   void setCountDown() {
-    const reduceSecondsBy = 1;
+    if (stopTime == false) {
+      reduceSecondsBy = 1;
+    } else {
+      reduceSecondsBy = 0;
+    }
     setState(() {
       final seconds = answerDuration.inSeconds - reduceSecondsBy;
       if (seconds < 0) {
@@ -138,10 +150,93 @@ class _LanguageGameThreeState extends State<LanguageGameThree> {
     controller.dispose();
   }
 
+  Future<void> _dialogBuilderTwo(BuildContext context) {
+    final obController = OnBoardingLanguageThree();
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) => WillPopScope(
+        onWillPop: () async {
+          // final back = await showMyDialog(context);
+          return false;
+        },
+        child: Scaffold(
+          body: Stack(
+            alignment: Alignment.center,
+            children: [
+              LiquidSwipe(
+                pages: obController.pages,
+                enableSideReveal: true,
+                liquidController: obController.controller,
+                onPageChangeCallback: obController.onPageChangedCallback,
+                slideIconWidget: const Icon(Icons.arrow_back_ios),
+                waveType: WaveType.liquidReveal,
+              ),
+              Positioned(
+                top: 50,
+                right: 20,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    stopTime = false;
+                  },
+                  child:
+                      const Text("Skip", style: TextStyle(color: Colors.grey)),
+                ),
+              ),
+              Obx(
+                () => Positioned(
+                  bottom: 10,
+                  child: AnimatedSmoothIndicator(
+                    count: 3,
+                    activeIndex: obController.currentPage.value,
+                    effect: const ExpandingDotsEffect(
+                      activeDotColor: Color(0xff272727),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<bool?> showMyDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Bạn có muốn thoát ra ?'),
+          actions: [
+            TextButton(
+              child: Text('Không'),
+              onPressed: () {
+                back = false;
+                Navigator.pop(context, back);
+              },
+            ),
+            TextButton(
+              child: Text('Có'),
+              onPressed: () {
+                back = true;
+                Navigator.pop(context, back);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final seconds = answerDuration.inSeconds;
-    return SafeArea(
+    return WillPopScope(
+      onWillPop: () async {
+        final back = await showMyDialog(context);
+        return back ?? false;
+      },
       child: Scaffold(
         body: Container(
           decoration: const BoxDecoration(
@@ -163,282 +258,351 @@ class _LanguageGameThreeState extends State<LanguageGameThree> {
               ),
               Column(
                 children: [
-                  Container(
-                    // margin: const EdgeInsets.all(16),
-                    height: 440,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 16),
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFFFFD740), Color(0xFFF9A825)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                  Expanded(
+                    flex: 0,
+                    child: Container(
+                      // margin: const EdgeInsets.all(16),
+                      height: 460,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 16),
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Color(0xFFFFD740), Color(0xFFF9A825)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                        ),
                       ),
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(20),
-                        bottomLeft: Radius.circular(20),
-                      ),
-                    ),
-                    child: Scaffold(
-                      backgroundColor: Colors.transparent,
-                      // height:300,
-                      body: Container(
-                        child: Center(
-                          child: Column(
-                            children: [
-                              // const Padding(
-                              //   padding: EdgeInsets.all(10),
-                              //   child: Text(
-                              //     'Language',
-                              //     style: TextStyle(
-                              //       color: Colors.green,
-                              //       fontSize: 34,
-                              //     ),
-                              //   ),
-                              // ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                height: 30,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: Colors.white,
-                                ),
-                                child: Stack(
-                                  alignment: Alignment.centerLeft,
-                                  children: [
-                                    Consumer(
-                                      builder: (context, ref, child) {
-                                        // final questions = ref.watch(questionsProvider);
-                                        return FractionallySizedBox(
-                                          alignment: Alignment.centerLeft,
-                                          widthFactor:
-                                              answerDuration.inSeconds /
-                                                  answerDurationInSeconds,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              color: Colors.green[300],
+                      child: Scaffold(
+                        backgroundColor: Colors.transparent,
+                        // height:300,
+                        body: Container(
+                          child: Center(
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 10),
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          IconButton(
+                                            onPressed: () async {
+                                              final back =
+                                                  await showMyDialog(context);
+                                              if (back == true) {
+                                                Navigator.pop(context, back);
+                                              }
+                                            },
+                                            icon: const Icon(
+                                              Icons.arrow_circle_left_outlined,
+                                              size: 40,
                                             ),
+                                            color: Colors.black,
                                           ),
-                                        );
-                                      },
-                                    ),
-                                    // Image.asset(
-                                    //   'assets/images/slow-loading.png',
-                                    //   width: 3980,
-                                    //   height:400,
-                                    // ),
-                                    Positioned(
-                                      left: 10,
-                                      child: Consumer(
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              _dialogBuilderTwo(context);
+                                              stopTime = true;
+                                            },
+                                            icon: const Icon(
+                                              Icons.question_mark_rounded,
+                                              size: 35,
+                                            ),
+                                            color: Colors.black,
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              stopTime = true;
+                                              _dialogBuilderTwo(context);
+                                            },
+                                            icon: const Icon(
+                                              Icons.settings,
+                                              size: 35,
+                                            ),
+                                            color: Colors.black,
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  height: 30,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: LightColors.kLightYellow,
+                                  ),
+                                  child: Stack(
+                                    alignment: Alignment.centerLeft,
+                                    children: [
+                                      Consumer(
                                         builder: (context, ref, child) {
-                                          return Text(
-                                              '${answerDuration.inSeconds} seconds');
+                                          // final questions = ref.watch(questionsProvider);
+                                          return FractionallySizedBox(
+                                            alignment: Alignment.centerLeft,
+                                            widthFactor:
+                                                answerDuration.inSeconds /
+                                                    answerDurationInSeconds,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                                color: Colors.green[300],
+                                              ),
+                                            ),
+                                          );
                                         },
                                       ),
-                                    ),
-                                    const Positioned(
-                                      right: 10,
-                                      child: Icon(
-                                        Icons.timer,
-                                        size: 18,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 6, horizontal: 2),
-                                    child: Container(
-                                        margin: const EdgeInsets.all(16),
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 6, horizontal: 22),
-                                        height: 330,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
+                                      // Image.asset(
+                                      //   'assets/images/slow-loading.png',
+                                      //   width: 3980,
+                                      //   height:400,
+                                      // ),
+                                      Positioned(
+                                        left: 10,
+                                        child: Consumer(
+                                          builder: (context, ref, child) {
+                                            return Text(
+                                                '${answerDuration.inSeconds} seconds');
+                                          },
                                         ),
-                                        child: FutureBuilder<String>(
-                                          future: firstCharacter,
-                                          builder: (context, snapshot) {
-                                            if (snapshot.hasData) {
-                                              return Column(children: [
-                                                const Text('Nối từ',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 25)),
-                                                Text(
-                                                    "Từ đầu tiên: ${_answer[3]}",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 25)),
-                                                const SizedBox(
-                                                  height: 50,
-                                                ),
-                                                Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: [
-                                                      Container(
-                                                          width: 100,
-                                                          height: 70,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Colors.yellow,
-                                                              width: 5.0,
-                                                            ),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                          ),
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                              _answer[_answer
-                                                                      .length -
-                                                                  3],
-                                                              style: const TextStyle(
-                                                                  fontSize: 20,
-                                                                  color: Colors
-                                                                      .black))),
-                                                      Container(
-                                                          width: 100,
-                                                          height: 70,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Colors.yellow,
-                                                              width: 5.0,
-                                                            ),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                          ),
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                              _answer[_answer
-                                                                      .length -
-                                                                  2],
-                                                              style: const TextStyle(
-                                                                  fontSize: 20,
-                                                                  color: Colors
-                                                                      .black))),
-                                                    ]),
-                                                const SizedBox(
-                                                  height: 15,
-                                                ),
-                                                Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: [
-                                                      Container(
-                                                          width: 100,
-                                                          height: 70,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Colors.yellow,
-                                                              width: 5.0,
-                                                            ),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                          ),
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                              _answer[_answer
-                                                                      .length -
-                                                                  1],
-                                                              style: const TextStyle(
-                                                                  fontSize: 20,
-                                                                  color: Colors
-                                                                      .black))),
-                                                      Container(
-                                                          width: 100,
-                                                          height: 70,
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: TextField(
-                                                            controller:
-                                                                controller,
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style:
-                                                                const TextStyle(
-                                                                    fontSize:
-                                                                        20,
-                                                                    height:
-                                                                        1.7),
-                                                            decoration:
-                                                                InputDecoration(
-                                                              enabledBorder:
-                                                                  OutlineInputBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            6),
-                                                                borderSide:
-                                                                    const BorderSide(
-                                                                  color: Colors
-                                                                      .green,
-                                                                  width: 1.0,
-                                                                ),
-                                                              ), // OutlineInputBorder
-                                                              focusedBorder:
-                                                                  OutlineInputBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                                borderSide:
-                                                                    const BorderSide(
+                                      ),
+                                      const Positioned(
+                                        right: 10,
+                                        child: Icon(
+                                          Icons.timer,
+                                          size: 18,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(
+                                            margin: const EdgeInsets.only(
+                                              top: 20,
+                                              bottom: 20,
+                                              left: 20,
+                                              right: 20,
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 6, horizontal: 22),
+                                            height: 330,
+                                            decoration: BoxDecoration(
+                                              color: LightColors.kLightYellow,
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            child: FutureBuilder<String>(
+                                              future: firstCharacter,
+                                              builder: (context, snapshot) {
+                                                if (snapshot.hasData) {
+                                                  return Column(children: [
+                                                    const Text('Nối từ',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            fontSize: 25)),
+                                                    Text(
+                                                        "Từ đầu tiên: ${_answer[3]}",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            fontSize: 25)),
+                                                    const SizedBox(
+                                                      height: 50,
+                                                    ),
+                                                    Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          Container(
+                                                              width: 100,
+                                                              height: 70,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                border:
+                                                                    Border.all(
                                                                   color: Colors
                                                                       .yellow,
                                                                   width: 5.0,
-                                                                ), // OutlineInputBorder
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10.0),
                                                               ),
-                                                              hintText:
-                                                                  'Nhập từ',
-                                                            ),
-                                                          ))
-                                                    ]),
-                                              ]);
-                                            } else if (snapshot.hasError) {
-                                              return Text('${snapshot.error}');
-                                            }
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Text(
+                                                                  _answer[_answer
+                                                                          .length -
+                                                                      3],
+                                                                  style: const TextStyle(
+                                                                      fontSize:
+                                                                          20,
+                                                                      color: Colors
+                                                                          .black))),
+                                                          Container(
+                                                              width: 100,
+                                                              height: 70,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Colors
+                                                                      .yellow,
+                                                                  width: 5.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10.0),
+                                                              ),
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Text(
+                                                                  _answer[_answer
+                                                                          .length -
+                                                                      2],
+                                                                  style: const TextStyle(
+                                                                      fontSize:
+                                                                          20,
+                                                                      color: Colors
+                                                                          .black))),
+                                                        ]),
+                                                    const SizedBox(
+                                                      height: 15,
+                                                    ),
+                                                    Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          Container(
+                                                              width: 100,
+                                                              height: 70,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Colors
+                                                                      .yellow,
+                                                                  width: 5.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10.0),
+                                                              ),
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Text(
+                                                                  _answer[_answer
+                                                                          .length -
+                                                                      1],
+                                                                  style: const TextStyle(
+                                                                      fontSize:
+                                                                          20,
+                                                                      color: Colors
+                                                                          .black))),
+                                                          Container(
+                                                              width: 100,
+                                                              height: 70,
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: TextField(
+                                                                controller:
+                                                                    controller,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style:
+                                                                    const TextStyle(
+                                                                        fontSize:
+                                                                            20,
+                                                                        height:
+                                                                            1.7),
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  enabledBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(6),
+                                                                    borderSide:
+                                                                        const BorderSide(
+                                                                      color: Colors
+                                                                          .green,
+                                                                      width:
+                                                                          1.0,
+                                                                    ),
+                                                                  ), // OutlineInputBorder
+                                                                  focusedBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            10),
+                                                                    borderSide:
+                                                                        const BorderSide(
+                                                                      color: Colors
+                                                                          .yellow,
+                                                                      width:
+                                                                          5.0,
+                                                                    ), // OutlineInputBorder
+                                                                  ),
+                                                                  hintText:
+                                                                      'Nhập từ',
+                                                                ),
+                                                              ))
+                                                        ]),
+                                                  ]);
+                                                } else if (snapshot.hasError) {
+                                                  return Text(
+                                                      '${snapshot.error}');
+                                                }
 
-                                            // By default, show a loading spinner.
-                                            return const Center(
-                                                heightFactor: 22.0,
-                                                child:
-                                                    CircularProgressIndicator());
-                                          },
-                                        )),
+                                                // By default, show a loading spinner.
+                                                return const Center(
+                                                    heightFactor: 22.0,
+                                                    child:
+                                                        CircularProgressIndicator());
+                                              },
+                                            )),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/theme_color/light_colors.dart';
 import 'package:flutter_application_1/widgets/components/custom_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:math';
@@ -9,11 +10,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/general/check_languages.dart';
 import 'package:flutter_application_1/widgets/components/toast.dart';
 import 'package:flutter_application_1/general/app_route.dart';
-// import 'package:introduction_screen/introduction_screen.dart';
 import 'package:flutter_application_1/widgets/components/button_widget.dart';
-import 'package:flutter_application_1/size_configs.dart';
-import 'package:flutter_application_1/data/data_onborad/onboard_data.dart';
-import 'package:flutter_application_1/app_styles.dart';
+import 'package:flutter_application_1/set_size/size_configs.dart';
+import 'package:flutter_application_1/data/data_onborad/data_languages_1.dart';
+import 'package:flutter_application_1/screens/walkthrough/app_styles.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -216,7 +216,7 @@ class _LanguagesFirstLetterState extends State<LanguagesFirstLetter> {
                 liquidController: obController.controller,
                 onPageChangeCallback: obController.onPageChangedCallback,
                 slideIconWidget: const Icon(Icons.arrow_back_ios),
-                waveType: WaveType.circularReveal,
+                waveType: WaveType.liquidReveal,
               ),
               Positioned(
                 top: 50,
@@ -400,12 +400,7 @@ class _LanguagesFirstLetterState extends State<LanguagesFirstLetter> {
       child: Scaffold(
         body: Container(
           decoration: const BoxDecoration(
-            // gradient: LinearGradient(
-            //   colors: [Color(0xFFFFD740), Color(0xFFF9A825)],
-            //   begin: Alignment.topLeft,
-            //   end: Alignment.bottomRight,
-            // ),
-            color: Colors.white,
+            color: LightColors.kLightYellow,
           ),
           child: Stack(
             alignment: Alignment.bottomCenter,
@@ -486,6 +481,7 @@ class _LanguagesFirstLetterState extends State<LanguagesFirstLetter> {
                                           IconButton(
                                             onPressed: () {
                                               _dialogBuilderTwo(context);
+                                              stopTime = true;
                                             },
                                             icon: const Icon(
                                               Icons.question_mark_rounded,
@@ -517,14 +513,13 @@ class _LanguagesFirstLetterState extends State<LanguagesFirstLetter> {
                                   width: double.infinity,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(30),
-                                    color: Colors.white,
+                                    color: LightColors.kLightYellow,
                                   ),
                                   child: Stack(
                                     alignment: Alignment.centerLeft,
                                     children: [
                                       Consumer(
                                         builder: (context, ref, child) {
-                                          // final questions = ref.watch(questionsProvider);
                                           return FractionallySizedBox(
                                             alignment: Alignment.centerLeft,
                                             widthFactor:
@@ -534,17 +529,12 @@ class _LanguagesFirstLetterState extends State<LanguagesFirstLetter> {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(30),
-                                                color: Colors.green[300],
+                                                color: LightColors.kDarkGreen,
                                               ),
                                             ),
                                           );
                                         },
                                       ),
-                                      // Image.asset(
-                                      //   'assets/images/slow-loading.png',
-                                      //   width: 3980,
-                                      //   height:400,
-                                      // ),
                                       Positioned(
                                         left: 10,
                                         child: Consumer(
@@ -585,7 +575,7 @@ class _LanguagesFirstLetterState extends State<LanguagesFirstLetter> {
                                               vertical: 6, horizontal: 22),
                                           height: 200,
                                           decoration: BoxDecoration(
-                                            color: Colors.white,
+                                            color: LightColors.kLightYellow,
                                             borderRadius:
                                                 BorderRadius.circular(12),
                                           ),
@@ -679,9 +669,6 @@ class _LanguagesFirstLetterState extends State<LanguagesFirstLetter> {
                                 });
                               },
                               decoration: const InputDecoration(
-                                // border: OutlineInputBorder(
-                                //   borderRadius: BorderRadius.all(Radius.circular(30)),
-                                // ),
                                 hintText: "nhập từ ở đây",
                               ),
                             ),

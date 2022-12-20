@@ -11,8 +11,8 @@ import 'package:flutter_application_1/screens/game/languages/languages_first_wor
 import 'package:flutter_application_1/screens/game/languages/languages_word_sort.dart';
 
 //Admin
+
 import 'package:flutter_application_1/screens/admin/admin_page.dart';
-import 'package:flutter_application_1/screens/admin/admin_page copy.dart';
 
 //popup
 
@@ -35,7 +35,7 @@ class RouteGenerator {
   //popup
   static const walkthrough_screen = '/walkthrough_screen';
   //admin_page
-  static const admin_page = '/admin_page';
+
   static const admin_page2 = '/admin_page2';
 
   static final routes = {
@@ -53,7 +53,7 @@ class RouteGenerator {
     gameSort: (context) => const WordFind(),
 
     //admin
-    admin_page: (context) => FilterLocalListPage(),
-    admin_page2: (context) => const Homepage2(),
+
+    admin_page2: (context) => const Adminpage(),
   };
 }

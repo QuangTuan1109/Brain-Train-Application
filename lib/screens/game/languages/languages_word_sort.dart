@@ -1,7 +1,13 @@
 import 'dart:math';
-import 'package:flutter_application_1/data/data_language/list_questiom_four.dart';
+import 'package:flutter_application_1/data/data_language/list_question_four.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/theme_color/light_colors.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:word_search/word_search.dart';
+
+import '../../../data/data_onborad/data_languages_4.dart';
 
 class WordFind extends StatefulWidget {
   const WordFind({Key? key}) : super(key: key);
@@ -70,7 +76,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
   late List<WordFindQues> listQuestions;
   int indexQues = 0; // current index question
   int hintCount = 0;
-
+  bool back = false;
   // thanks for watching.. :)
 
   @override
@@ -79,6 +85,84 @@ class _WordFindWidgetState extends State<WordFindWidget> {
     size = widget.size;
     listQuestions = widget.listQuestions;
     generatePuzzle();
+  }
+
+  Future<bool?> showMyDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Bạn có muốn thoát ra ?'),
+          actions: [
+            TextButton(
+              child: Text('Không'),
+              onPressed: () {
+                back = false;
+                Navigator.pop(context, back);
+              },
+            ),
+            TextButton(
+              child: Text('Có'),
+              onPressed: () {
+                back = true;
+                Navigator.pop(context, back);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _dialogBuilderTwo(BuildContext context) {
+    final obController = OnBoardingLanguageFour();
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) => WillPopScope(
+        onWillPop: () async {
+          // final back = await showMyDialog(context);
+          return false;
+        },
+        child: Scaffold(
+          body: Stack(
+            alignment: Alignment.center,
+            children: [
+              LiquidSwipe(
+                pages: obController.pages,
+                enableSideReveal: true,
+                liquidController: obController.controller,
+                onPageChangeCallback: obController.onPageChangedCallback,
+                slideIconWidget: const Icon(Icons.arrow_back_ios),
+                waveType: WaveType.liquidReveal,
+              ),
+              Positioned(
+                top: 50,
+                right: 20,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child:
+                      const Text("Skip", style: TextStyle(color: Colors.grey)),
+                ),
+              ),
+              Obx(
+                () => Positioned(
+                  bottom: 10,
+                  child: AnimatedSmoothIndicator(
+                    count: 3,
+                    activeIndex: obController.currentPage.value,
+                    effect: const ExpandingDotsEffect(
+                      activeDotColor: Color(0xff272727),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -90,19 +174,23 @@ class _WordFindWidgetState extends State<WordFindWidget> {
     var test = int.parse(currentQues.count);
     // ignore: unnecessary_type_check
     assert(test is int);
-    return SafeArea(
+    return WillPopScope(
+      onWillPop: () async {
+        final back = await showMyDialog(context);
+        return back ?? false;
+      },
       child: Scaffold(
         body: Container(
           width: double.maxFinite,
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: LightColors.kLightYellow,
           ),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
               const Positioned(
-                left: -230,
-                right: -5,
+                left: -5,
+                right: -230,
                 child: Image(
                   image: AssetImage('assets/images/cat-sleep.gif'),
                   height: 200,
@@ -110,20 +198,13 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                   //   width:400,
                 ),
               ),
-
-              // SvgPicture.asset(
-              //   'assets/images/business-lady-do-multi-tasking.svg',
-              //   // fit: BoxFit.fitHeight,
-              //   height:200,
-              //   width:400,
-              // ),
               Column(
                 children: [
                   Container(
                     // margin: const EdgeInsets.all(16),
-                    height: 450,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 16),
+                    height: 500,
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 1, horizontal: 16),
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [Color(0xFFFFD740), Color(0xFFF9A825)],
@@ -138,7 +219,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                     child: Scaffold(
                       backgroundColor: Colors.transparent,
                       // height:300,
-                      body: SingleChildScrollView(
+                      body: Container(
                         child: Center(
                           child: Column(
                             children: [
@@ -152,149 +233,257 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                                         vertical: 6, horizontal: 2),
                                     child: Column(
                                       children: [
+                                        const SizedBox(height: 10),
                                         Container(
-                                          padding: EdgeInsets.all(10),
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Row(
                                                 children: [
-                                                  InkWell(
-                                                    onTap: () => generateHint(),
-                                                    child: Icon(
-                                                      Icons.tungsten_outlined,
-                                                      size: 45,
-                                                      color: Colors.yellow[900],
-                                                    ),
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      currentQues.isDone =
-                                                          false;
-                                                      generatePuzzle(
-                                                          next: true);
-                                                      currentQues.isFull =
-                                                          false;
+                                                  IconButton(
+                                                    onPressed: () async {
+                                                      final back =
+                                                          await showMyDialog(
+                                                              context);
+                                                      if (back == true) {
+                                                        Navigator.pop(
+                                                            context, back);
+                                                      }
                                                     },
-                                                    child: Icon(
-                                                      Icons.sync_outlined,
-                                                      size: 45,
-                                                      color: Colors.yellow[900],
+                                                    icon: const Icon(
+                                                      Icons
+                                                          .arrow_circle_left_outlined,
+                                                      size: 40,
                                                     ),
+                                                    color: Colors.black,
                                                   ),
                                                 ],
                                               ),
                                               Row(
                                                 children: [
-                                                  InkWell(
-                                                    onTap: () => generatePuzzle(
-                                                        left: true),
-                                                    child: Icon(
-                                                      Icons.arrow_back_ios,
-                                                      size: 45,
-                                                      color: Colors.yellow[900],
+                                                  IconButton(
+                                                    onPressed: () {
+                                                      _dialogBuilderTwo(
+                                                          context);
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons
+                                                          .question_mark_rounded,
+                                                      size: 35,
                                                     ),
+                                                    color: Colors.black,
                                                   ),
-                                                  InkWell(
-                                                    onTap: () => generatePuzzle(
-                                                        next: true),
-                                                    child: Icon(
-                                                      Icons.arrow_forward_ios,
-                                                      size: 45,
-                                                      color: Colors.yellow[900],
+                                                  IconButton(
+                                                    onPressed: () {
+                                                      _dialogBuilderTwo(
+                                                          context);
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.settings,
+                                                      size: 35,
                                                     ),
+                                                    color: Colors.black,
                                                   ),
                                                 ],
                                               )
                                             ],
                                           ),
                                         ),
+                                        const SizedBox(height: 10),
                                         Container(
-                                          padding: EdgeInsets.all(10),
-                                          margin: EdgeInsets.fromLTRB(
-                                              30, 55, 50, 70),
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            textAlign: TextAlign.center,
-                                            "${currentQues.question ?? ''}",
-                                            style: const TextStyle(
-                                              fontSize: 25,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                          margin: const EdgeInsets.only(
+                                            top: 5,
+                                            bottom: 5,
+                                            left: 5,
+                                            right: 5,
                                           ),
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 30, horizontal: 10),
-                                          alignment: Alignment.center,
-                                          child: LayoutBuilder(
-                                            builder: (context, constraints) {
-                                              return Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: currentQues.puzzles
-                                                    .map((puzzle) {
-                                                  // later change color based condition
-                                                  Color? color;
-
-                                                  if (currentQues.isDone)
-                                                    color = Colors.green[600];
-                                                  else if (puzzle.hintShow) {
-                                                    color = Colors.green[600];
-                                                  } else if (currentQues
-                                                      .isFull) {
-                                                    color = Colors.red;
-                                                  } else {
-                                                    color = Colors.white;
-                                                  }
-
-                                                  return InkWell(
-                                                    onTap: () {
-                                                      if (puzzle.hintShow ||
-                                                          currentQues.isDone)
-                                                        return;
-                                                      currentQues.isFull =
-                                                          false;
-                                                      // currentQues.isDone = false;
-                                                      puzzle.clearValue();
-                                                      setState(() {});
-                                                    },
-                                                    child: Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                        color: color,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
-                                                      width: constraints.biggest
-                                                                  .width /
-                                                              test -
-                                                          6,
-                                                      height: constraints
-                                                              .biggest.width /
-                                                          8,
-                                                      margin: EdgeInsets.all(3),
-                                                      child: Text(
-                                                        "${puzzle.currentValue ?? ''}"
-                                                            .toUpperCase(),
-                                                        style: TextStyle(
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 6, horizontal: 22),
+                                          height: 380,
+                                          decoration: BoxDecoration(
+                                            color: LightColors.kLightYellow,
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.all(10),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        InkWell(
+                                                          onTap: () =>
+                                                              generateHint(),
+                                                          child: Icon(
+                                                            Icons
+                                                                .tungsten_outlined,
+                                                            size: 45,
+                                                            color: Colors
+                                                                .yellow[900],
+                                                          ),
                                                         ),
-                                                      ),
+                                                        InkWell(
+                                                          onTap: () {
+                                                            currentQues.isDone =
+                                                                false;
+                                                            generatePuzzle(
+                                                                next: true);
+                                                            currentQues.isFull =
+                                                                false;
+                                                          },
+                                                          child: Icon(
+                                                            Icons.sync_outlined,
+                                                            size: 45,
+                                                            color: Colors
+                                                                .yellow[900],
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  );
-                                                }).toList(),
-                                              );
-                                            },
+                                                    Row(
+                                                      children: [
+                                                        InkWell(
+                                                          onTap: () =>
+                                                              generatePuzzle(
+                                                                  left: true),
+                                                          child: Icon(
+                                                            Icons
+                                                                .arrow_back_ios,
+                                                            size: 45,
+                                                            color: Colors
+                                                                .yellow[900],
+                                                          ),
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () =>
+                                                              generatePuzzle(
+                                                                  next: true),
+                                                          child: Icon(
+                                                            Icons
+                                                                .arrow_forward_ios,
+                                                            size: 45,
+                                                            color: Colors
+                                                                .yellow[900],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.all(10),
+                                                margin: EdgeInsets.fromLTRB(
+                                                    20, 55, 30, 10),
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  textAlign: TextAlign.center,
+                                                  "${currentQues.question ?? ''}",
+                                                  style: const TextStyle(
+                                                    fontSize: 25,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 30,
+                                                    horizontal: 0),
+                                                alignment: Alignment.center,
+                                                child: LayoutBuilder(
+                                                  builder:
+                                                      (context, constraints) {
+                                                    return Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: currentQues
+                                                          .puzzles
+                                                          .map((puzzle) {
+                                                        // later change color based condition
+                                                        Color? color;
+
+                                                        if (currentQues.isDone)
+                                                          color =
+                                                              Colors.green[600];
+                                                        else if (puzzle
+                                                            .hintShow) {
+                                                          color =
+                                                              Colors.green[600];
+                                                        } else if (currentQues
+                                                            .isFull) {
+                                                          color = Colors.red;
+                                                        } else {
+                                                          color = LightColors
+                                                              .kLightYellow2;
+                                                        }
+
+                                                        return InkWell(
+                                                          onTap: () {
+                                                            if (puzzle
+                                                                    .hintShow ||
+                                                                currentQues
+                                                                    .isDone)
+                                                              return;
+                                                            currentQues.isFull =
+                                                                false;
+                                                            // currentQues.isDone = false;
+                                                            puzzle.clearValue();
+                                                            setState(() {});
+                                                          },
+                                                          child: Container(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: color,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                            width: constraints
+                                                                        .biggest
+                                                                        .width /
+                                                                    test -
+                                                                6,
+                                                            height: constraints
+                                                                    .biggest
+                                                                    .width /
+                                                                8,
+                                                            margin:
+                                                                EdgeInsets.all(
+                                                                    3),
+                                                            child: Text(
+                                                              "${puzzle.currentValue ?? ''}"
+                                                                  .toUpperCase(),
+                                                              style: TextStyle(
+                                                                fontSize: 25,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }).toList(),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -335,7 +524,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 50),
                   Column(
                     children: [
                       Container(
@@ -345,7 +534,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             childAspectRatio: 1,
-                            crossAxisCount: test,
+                            crossAxisCount: 5,
                             crossAxisSpacing: 3,
                             mainAxisSpacing: 4,
                           ),
@@ -376,7 +565,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                                           .toUpperCase(),
                                       style: const TextStyle(
                                         color: Colors.black,
-                                        fontSize: 25,
+                                        fontSize: 22,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
