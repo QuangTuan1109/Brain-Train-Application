@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/data/data_onborad/onboard_data.dart';
+import 'package:flutter_application_1/data/data_onborad/data_languages_1.dart';
 import 'package:flutter_application_1/models/model_onboarding.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
