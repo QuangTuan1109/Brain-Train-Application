@@ -37,45 +37,8 @@ class RoomNotifier extends ChangeNotifier {
   int currentScore = 0;
   int indexRightAnswerTime = 0;
 
-  // Handle scores game math 1
-  int get Score {
-    currentScore += currentQuestion.point;
-
-    return currentScore;
-  }
-
-  // Handle scores game math 2
-  int get ScoreGameMath2 {
-    for (int i = 0; i <= 8; i++) {
-      for (int j = i + 1; j <= 8; ++j) {
-        if (isPressedList[i] == true && isPressedList[j] == true) {
-          if ((i == currentQuestionMath2.rightAnswerIndex1 - 1 ||
-                  i == currentQuestionMath2.rightAnswerIndex2 - 1) &&
-              (j == currentQuestionMath2.rightAnswerIndex1 - 1 ||
-                  j == currentQuestionMath2.rightAnswerIndex2 - 1)) {
-            currentScore += currentQuestionMath2.point;
-          }
-        }
-      }
-    }
-    return currentScore;
-  }
-
   Timer? timer;
   int seconds = 0;
-
-  // Initial time
-  void initTimeGameMath() {
-    seconds = 60;
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (seconds == 0) {
-        timer.cancel();
-      } else {
-        seconds--;
-      }
-      notifyListeners();
-    });
-  }
 
   /*============================================ Handle Game Math 1 =============================================================== */
 
@@ -90,6 +53,26 @@ class RoomNotifier extends ChangeNotifier {
       default:
         return Colors.white;
     }
+  }
+
+  // Initial time of game math 1
+  void initTimeGameMath1() {
+    seconds = 60;
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (seconds == 0) {
+        timer.cancel();
+      } else {
+        seconds--;
+      }
+      notifyListeners();
+    });
+  }
+
+  // Handle scores game math 1
+  int get Score {
+    currentScore += currentQuestion.point;
+
+    return currentScore;
   }
 
   // Get question of game math 1 in data file
@@ -136,22 +119,12 @@ class RoomNotifier extends ChangeNotifier {
   Future<void> answerQuestion(int index) async {
     final isRightAns = currentQuestion.rightAnswerIndex - 1 == index;
 
-    isUserAnswering = true;
     isAnswerChosen = true;
     isRightAnswer = isRightAns;
     notifyListeners();
     await Future.delayed(const Duration(seconds: 2));
 
-    isUserAnswering = null;
-    if (isRightAns) {
-      amIRight = true;
-    } else {
-      isMyFault = true;
-    }
-
     if (currentQuestionIndex < 100) currentQuestionIndex++;
-    isMyFault = false;
-    amIRight = false;
     isAnswerChosen = false;
     isRightAnswer = null;
     notifyListeners();
@@ -185,8 +158,6 @@ class RoomNotifier extends ChangeNotifier {
     false,
     false,
     false,
-    false,
-    false
   ];
   int indexAns = 0;
   int? curAns;
@@ -202,6 +173,23 @@ class RoomNotifier extends ChangeNotifier {
       }
       notifyListeners();
     });
+  }
+
+  // Handle scores game math 2
+  int get ScoreGameMath2 {
+    for (int i = 0; i < 8; i++) {
+      for (int j = i + 1; j < 8; ++j) {
+        if (isPressedList[i] == true && isPressedList[j] == true) {
+          if ((i == currentQuestionMath2.rightAnswerIndex1 - 1 ||
+                  i == currentQuestionMath2.rightAnswerIndex2 - 1) &&
+              (j == currentQuestionMath2.rightAnswerIndex1 - 1 ||
+                  j == currentQuestionMath2.rightAnswerIndex2 - 1)) {
+            currentScore += currentQuestionMath2.point;
+          }
+        }
+      }
+    }
+    return currentScore;
   }
 
   // Get question of game math 1 in data file
@@ -257,7 +245,6 @@ class RoomNotifier extends ChangeNotifier {
     } else if (indexAns == 2) {
       await Future.delayed(const Duration(seconds: 1));
       isAnswerChosen = true;
-      print(isPressedList);
       ScoreGameMath2;
       notifyListeners();
       await Future.delayed(const Duration(seconds: 2));
@@ -276,8 +263,6 @@ class RoomNotifier extends ChangeNotifier {
         false,
         false,
         false,
-        false,
-        false
       ];
       notifyListeners();
     }

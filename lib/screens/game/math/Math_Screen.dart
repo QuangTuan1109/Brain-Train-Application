@@ -117,7 +117,7 @@ class MathScreen extends ConsumerWidget {
                       padding: const EdgeInsets.only(top: 25),
                       child: InkWell(
                         onTap: () {
-                          room.initTimeGameMath();
+                          room.initTimeGameMath1();
                           Navigator.of(context)
                               .pushNamed(RouteGenerator.gameMath1);
                         },
