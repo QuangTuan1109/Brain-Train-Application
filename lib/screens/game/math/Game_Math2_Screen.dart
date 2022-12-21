@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/provider/auth.dart';
+import 'package:flutter_application_1/provider/questions.dart';
 import 'package:flutter_application_1/provider/room.dart';
 import 'package:flutter_application_1/widgets/components/card_game_math2.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,10 +17,6 @@ class GameMath2Screen extends ConsumerStatefulWidget {
 }
 
 class _GameMath2ScreenState extends ConsumerState<GameMath2Screen> {
-  List<bool> isPressedList = [false, false, false];
-
-  String classChoice = '';
-
   var answer = List.generate(4, (index) => false);
   var index = 0;
 
@@ -142,7 +139,24 @@ class _GameMath2ScreenState extends ConsumerState<GameMath2Screen> {
                             fontWeight: FontWeight.bold))),
                     const Padding(padding: EdgeInsets.only(bottom: 5)),
                     Text(
-                      room.currentQuestion.round.toString(),
+                      room.currentQuestionMath2.level.toString(),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                child: Column(
+                  children: [
+                    const Text.rich(TextSpan(
+                        text: 'Vòng',
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontWeight: FontWeight.bold))),
+                    const Padding(padding: EdgeInsets.only(bottom: 5)),
+                    Text(
+                      room.currentQuestionMath2.round.toString(),
                       style: const TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
@@ -167,16 +181,20 @@ class _GameMath2ScreenState extends ConsumerState<GameMath2Screen> {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, crossAxisSpacing: 4.0, mainAxisSpacing: 4.0),
             itemBuilder: (BuildContext context, int index) {
-              //return Text(room.currentAnswersGameMath2[index]);
               return GameCard2(
                 answer: room.currentAnswersGameMath2[index],
                 answerCardStatus: room.answersStatusGameMath2[index],
                 onTap: room.isAnswerChosen
                     ? null
                     : () async {
+                        setState(() {
+                          room.isPressedList[index] =
+                              !room.isPressedList[index];
+                        });
+                        // print(room.indexAns);
                         await ref
                             .read(roomProvider.notifier)
-                            .answerQuestion(index);
+                            .answerQuestionGameMath2(index);
                       },
               );
             },

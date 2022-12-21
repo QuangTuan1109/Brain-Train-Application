@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/data/data_question_math1.dart';
 import 'package:flutter_application_1/models/questions_math1_model.dart';
 
-enum AnswerCardStatus { normal, disable, erorr, right }
+enum AnswerCardStatus { normal, disable, erorr, right, isPressed }
 
 class Questions extends ChangeNotifier {
   int? currentLevel;
@@ -75,6 +75,18 @@ class Questions extends ChangeNotifier {
       currentQuestionIndex++;
       currentQuestionAnswerIndex = null;
     }
+    notifyListeners();
+  }
+
+  void reset() {
+    currentScore = null;
+    seconds = 60;
+    timer = null;
+    currentLevel = null;
+    currentQuestionIndex = 0;
+    rightAnswer = 0;
+    isFinish = false;
+    currentQuestionAnswerIndex = null;
     notifyListeners();
   }
 }

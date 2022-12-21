@@ -13,6 +13,8 @@ Color textColor(AnswerCardStatus answerCardStatus) {
       return Colors.green;
     case AnswerCardStatus.disable:
       return Colors.black26;
+    case AnswerCardStatus.isPressed:
+      return Colors.blue.shade400;
     default:
       return Colors.black54;
   }
@@ -26,6 +28,8 @@ Color borderColor(AnswerCardStatus answerCardStatus) {
       return Colors.green;
     case AnswerCardStatus.disable:
       return Colors.grey.shade100;
+    case AnswerCardStatus.isPressed:
+      return Colors.blue.shade400;
     default:
       return Colors.grey.shade300;
   }

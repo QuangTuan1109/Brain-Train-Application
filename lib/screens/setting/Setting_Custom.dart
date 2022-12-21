@@ -40,7 +40,7 @@ class CustomSetting extends StatelessWidget {
                 Text(
                   properti,
                   style: const TextStyle(
-                      color: Color(0xff9B9898), fontSize: 15, letterSpacing: 2),
+                      color: Colors.black54, fontSize: 15, letterSpacing: 2),
                 )
               ],
             ),

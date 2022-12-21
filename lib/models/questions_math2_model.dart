@@ -10,7 +10,7 @@ class Questions_Math2_model {
   final int point;
   final int rightAnswerIndex1;
   final int rightAnswerIndex2;
-  final int time;
+  late int time;
 
   Questions_Math2_model(
       {required this.level,

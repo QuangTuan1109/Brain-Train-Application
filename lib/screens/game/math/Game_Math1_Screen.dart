@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/general/app_route.dart';
 import 'package:flutter_application_1/models/roomMathGameModel.dart';
 import 'package:flutter_application_1/provider/auth.dart';
 import 'package:flutter_application_1/widgets/components/card_game_math.dart';
@@ -79,7 +80,7 @@ class _GameMath1ScreenState extends ConsumerState<GameMath1Screen> {
                 ),
                 IconButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed('AppRoute.settings');
+                    Navigator.of(context).pushNamed(RouteGenerator.setting);
                   },
                   icon: const Icon(Icons.settings),
                   color: Colors.black,
