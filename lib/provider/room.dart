@@ -39,6 +39,7 @@ class RoomNotifier extends ChangeNotifier {
 
   Timer? timer;
   int seconds = 0;
+  int fixSeconds = 60;
 
   /*============================================ Handle Game Math 1 =============================================================== */
 
@@ -164,7 +165,7 @@ class RoomNotifier extends ChangeNotifier {
 
   // Initial time
   void initTimeGameMath2() {
-    seconds = currentQuestionMath2.time;
+    seconds = fixSeconds = currentQuestionMath2.time;
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (seconds == 0) {
         timer.cancel();
@@ -249,7 +250,7 @@ class RoomNotifier extends ChangeNotifier {
       notifyListeners();
       await Future.delayed(const Duration(seconds: 2));
       if (currentQuestionIndex < 100) currentQuestionIndex++;
-      seconds = currentQuestionMath2.time;
+      seconds = fixSeconds = currentQuestionMath2.time;
       indexAns = 0;
       isChosen = false;
       isAnswerChosen = false;

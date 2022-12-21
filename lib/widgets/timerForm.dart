@@ -86,7 +86,7 @@ class _CustomTimerState extends ConsumerState<CustomTimer> {
               final room = ref.watch(roomProvider);
               return FractionallySizedBox(
                 alignment: Alignment.centerLeft,
-                widthFactor: room.seconds / 60,
+                widthFactor: room.seconds / room.fixSeconds,
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),

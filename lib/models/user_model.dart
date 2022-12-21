@@ -27,7 +27,7 @@ class Users {
 
   String get profilePicture =>
       imageUrl ??
-      'https://img.freepik.com/free-vector/cute-astronaut-working-with-computer-cartoon-vector-icon-illustration-science-technology-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-4172.jpg';
+      'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-512.png';
 
   bool get isEmailSignin => password != null;
 
