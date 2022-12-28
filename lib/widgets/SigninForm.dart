@@ -109,10 +109,16 @@ class _SigninFormState extends State<SigninForm> {
                     return;
                   }
 
-                  await auth.Signin(SigninMethod.email,
-                      email: emailConntroller.text,
-                      password: passwordConntroller.text);
-                  Navigator.of(context).pushNamed('/homepage');
+                  try {
+                    await auth.Signin(SigninMethod.email,
+                        email: emailConntroller.text,
+                        password: passwordConntroller.text);
+                    Navigator.of(context).pushNamed('/homepage');
+                  } catch (e) {
+                    setState(() {
+                      isLoading = false;
+                    });
+                  }
                 },
                 text: 'Đăng Nhập');
           })

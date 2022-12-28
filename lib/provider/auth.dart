@@ -36,10 +36,13 @@ Future<User?> emailSignin(String email, String password) async {
         .signInWithEmailAndPassword(email: email, password: password);
     return credential.user;
   } on FirebaseAuthException catch (e) {
+    print(e.code);
     if (e.code == 'user-not-found') {
       throw Exception('No user found for that email.');
     } else if (e.code == 'wrong-password') {
       throw Exception('Wrong password provided for that user.');
+    } else if (e.code == 'invalid-email') {
+      throw Exception('Invalid email provided for that user.');
     }
   }
   return null;
