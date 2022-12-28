@@ -167,19 +167,21 @@ class _GameMath2ScreenState extends ConsumerState<GameMath2Screen> {
           ),
         ),
         const Divider(),
-        Padding(padding: EdgeInsets.only(top: 30)),
+        Padding(padding: EdgeInsets.only(top: 10)),
         Text(
           room.currentQuestionMath2.question,
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
-        Padding(padding: EdgeInsets.only(top: 30)),
+        Padding(padding: EdgeInsets.only(top: 10)),
         Container(
           child: Expanded(
               child: GridView.builder(
             itemCount: room.currentAnswersGameMath2.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, crossAxisSpacing: 4.0, mainAxisSpacing: 4.0),
+                crossAxisCount: 2,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 1.0),
             itemBuilder: (BuildContext context, int index) {
               return GameCard2(
                 answer: room.currentAnswersGameMath2[index],

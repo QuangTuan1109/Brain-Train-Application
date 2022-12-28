@@ -64,8 +64,7 @@ class GameCard2 extends ConsumerWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(microseconds: 100),
-        margin: const EdgeInsets.only(bottom: 30, top: 10),
-        //padding: const EdgeInsets.only(bottom: 10),
+        margin: const EdgeInsets.only(bottom: 30, top: 5),
         decoration: ShapeDecoration(
             color: bgrColor(answerCardStatus),
             shape: CircleBorder(

@@ -57,8 +57,9 @@ class Homepage extends ConsumerWidget {
                           Text(
                             '${auth.user.name}',
                             style: const TextStyle(
-                              color: Color(0xff001663),
-                            ),
+                                color: Color(0xff001663),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
                           ),
                           const SizedBox(width: 5),
                         ],

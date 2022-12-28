@@ -68,7 +68,9 @@ class SettingsScreen extends ConsumerWidget {
                         Text(
                           auth.user.name ?? '',
                           style: const TextStyle(
-                              color: Color(0xfff3f3f3), fontSize: 18),
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
                           height: 10,

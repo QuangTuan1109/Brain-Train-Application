@@ -9,7 +9,7 @@ class SignupScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authProvider);
+    //final auth = ref.watch(authProvider);
     return Scaffold(
         body: SingleChildScrollView(
       child: Center(

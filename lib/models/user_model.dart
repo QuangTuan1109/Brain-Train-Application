@@ -6,7 +6,7 @@ class Users {
     this.email,
     this.password,
     this.imageUrl,
-    this.points = 700,
+    this.userID,
     this.DOB,
     this.Gender,
   });
@@ -15,15 +15,9 @@ class Users {
   String? email;
   String? password;
   String? imageUrl;
-  int points;
+  String? userID;
   String? DOB;
   String? Gender;
-
-  int get division {
-    if (points < 1200) return 3;
-    if (points < 2000) return 2;
-    return 1;
-  }
 
   String get profilePicture =>
       imageUrl ??
@@ -37,10 +31,6 @@ class Users {
 
   String? get username => email?.split('@')[0];
 
-  void addPoints(int addedPoints) {
-    points += addedPoints;
-  }
-
   void clearUser() {
     name = null;
     email = null;
@@ -52,18 +42,19 @@ class Users {
     String? email,
     String? password,
     String? imageUrl,
-    int? points,
+    String? userID,
     String? DOB,
     String? Gender,
   }) {
     return Users(
-        name: name ?? this.name,
-        email: email ?? this.email,
-        password: password ?? this.password,
-        imageUrl: imageUrl ?? this.imageUrl,
-        points: points ?? this.points,
-        DOB: DOB ?? this.DOB,
-        Gender: Gender ?? this.Gender);
+      name: name ?? this.name,
+      email: email ?? this.email,
+      password: password ?? this.password,
+      imageUrl: imageUrl ?? this.imageUrl,
+      userID: userID ?? this.userID,
+      DOB: DOB ?? this.DOB,
+      Gender: Gender ?? this.Gender,
+    );
   }
 
   Map<String, dynamic> toMap() {
@@ -81,13 +72,15 @@ class Users {
     if (imageUrl != null) {
       result.addAll({'imageUrl': imageUrl});
     }
+    if (userID != null) {
+      result.addAll({'userID': userID});
+    }
     if (DOB != null) {
       result.addAll({'DOB': DOB});
     }
     if (Gender != null) {
       result.addAll({'Gender': Gender});
     }
-    result.addAll({'points': points});
 
     return result;
   }
@@ -98,9 +91,9 @@ class Users {
       email: map['email'],
       password: map['password'],
       imageUrl: map['imageUrl'],
-      points: map['points']?.toInt() ?? 0,
-      DOB: map['DOB'],
-      Gender: map['Gender'],
+      userID: map['userID'],
+      // DOB: map['DOB'],
+      // Gender: map['Gender'],
     );
   }
 
@@ -110,7 +103,7 @@ class Users {
 
   @override
   String toString() {
-    return 'Users(name: $name, email: $email, password: $password, imageUrl: $imageUrl, points: $points, DOB: $DOB, Gender: $Gender)';
+    return 'Users(name: $name, email: $email, password: $password, imageUrl: $imageUrl, userID: $userID  DOB: $DOB, Gender: $Gender)';
   }
 
   @override
@@ -122,7 +115,7 @@ class Users {
         other.email == email &&
         other.password == password &&
         other.imageUrl == imageUrl &&
-        other.points == points &&
+        other.userID == userID &&
         other.DOB == DOB &&
         other.Gender == Gender;
   }
@@ -133,7 +126,7 @@ class Users {
         email.hashCode ^
         password.hashCode ^
         imageUrl.hashCode ^
-        points.hashCode ^
+        userID.hashCode ^
         DOB.hashCode ^
         Gender.hashCode;
   }
