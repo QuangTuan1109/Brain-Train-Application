@@ -163,7 +163,7 @@ class LanguageScreen extends ConsumerWidget {
                       ),
                     ),
                     InkWell(
-                      onTap: () {
+                      onTap: () async {
                         Navigator.of(context)
                             .pushNamed(RouteGenerator.gameSort);
                       },

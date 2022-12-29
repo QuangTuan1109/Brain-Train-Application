@@ -83,7 +83,8 @@ class _WordFindWidgetState extends State<WordFindWidget> {
   int count = 0;
   var i = 0;
   int best = 0;
-  int count2 = 10;
+  int count2 = 3;
+  var nextcount = 0;
   bool back = false;
   // thanks for watching.. :)
 
@@ -106,10 +107,10 @@ class _WordFindWidgetState extends State<WordFindWidget> {
     getLevel();
     // setLevel();
     // setLevel2();
-    // generatePuzzle();
 
     // indexQues;
     generateHint();
+    generatePuzzle();
     // generateHintAll();
     // setLevel();
     // setLevel3();
@@ -118,14 +119,14 @@ class _WordFindWidgetState extends State<WordFindWidget> {
   getLevel() async {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();
-    int value = prefs.getInt(ShareData.counter) ?? 0;
+    // int value = prefs.getInt(ShareData.counter) ?? 0;
     // final prefs = await SharedPreferences.getInstance();
     int level = prefs.getInt(ShareData.level) ?? 0;
 
     setState(() {
       best = level.toInt();
       indexQues = level.toInt();
-
+      size = widget.size;
       // listQuestions = value.toString() as List<WordFindQues>;
       generatePuzzle();
     });
@@ -242,7 +243,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                 () => Positioned(
                   bottom: 10,
                   child: AnimatedSmoothIndicator(
-                    count: 3,
+                    count: 6,
                     activeIndex: obController.currentPage.value,
                     effect: const ExpandingDotsEffect(
                       activeDotColor: Color(0xff272727),
@@ -262,8 +263,14 @@ class _WordFindWidgetState extends State<WordFindWidget> {
     // lets make ui
     // let put current data on question
     WordFindQues currentQues = listQuestions[indexQues];
-
+    var ColorsHint;
     var test = int.parse(currentQues.count);
+    if (count2 > 1) {
+      ColorsHint = Colors.yellow[900];
+    } else {
+      ColorsHint = LightColors.kLightYellow;
+    }
+    ;
     // ignore: unnecessary_type_check
     assert(test is int);
     return WillPopScope(
@@ -410,14 +417,17 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                                                     Row(
                                                       children: [
                                                         InkWell(
-                                                          onTap: () =>
-                                                              generateHint(),
+                                                          onTap: () async {
+                                                            if (count2 > 1) {
+                                                              generateHint();
+                                                            }
+                                                            ;
+                                                          },
                                                           child: Icon(
                                                             Icons
                                                                 .tungsten_outlined,
                                                             size: 45,
-                                                            color: Colors
-                                                                .yellow[900],
+                                                            color: ColorsHint,
                                                           ),
                                                         ),
                                                         InkWell(
@@ -446,7 +456,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                                                     Row(
                                                       children: [
                                                         InkWell(
-                                                          onTap: () {
+                                                          onLongPress: () {
                                                             generatePuzzle(
                                                                 left: true);
                                                             generateHintAll();
@@ -460,9 +470,11 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                                                           ),
                                                         ),
                                                         InkWell(
-                                                          onTap: () =>
-                                                              generatePuzzle(
-                                                                  next: true),
+                                                          onLongPress:
+                                                              () async {
+                                                            generatePuzzle(
+                                                                next: true);
+                                                          },
                                                           child: Icon(
                                                             Icons
                                                                 .arrow_forward_ios,
@@ -634,7 +646,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                               SliverGridDelegateWithFixedCrossAxisCount(
                             childAspectRatio: 1,
                             crossAxisCount: 5,
-                            crossAxisSpacing: 3,
+                            crossAxisSpacing: 1,
                             mainAxisSpacing: 4,
                           ),
                           itemCount: test, // later change
@@ -694,6 +706,9 @@ class _WordFindWidgetState extends State<WordFindWidget> {
     bool next: false,
     bool left: false,
   }) async {
+    nextcount = 0;
+    count2 = 3;
+
     // lets finish up generate puzzle
     if (loop != null) {
       indexQues = 0;
@@ -703,8 +718,13 @@ class _WordFindWidgetState extends State<WordFindWidget> {
       if (next &&
           listQuestions[indexQues].isDone &&
           indexQues < listQuestions.length - 1) {
+        nextcount++;
+        await Future.delayed(Duration(seconds: 1));
         indexQues++;
-        if (indexQues > best) {
+
+        if (indexQues != 0 &&
+            indexQues > best &&
+            indexQues < listQuestions.length - 1) {
           best++;
         }
 
@@ -712,7 +732,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
         await prefs.setInt(ShareData.level, best.toInt());
 
         print("bao${best}");
-      } else if (left && indexQues > 0) {
+      } else if (left && indexQues != 0) {
         // setLevel2();
         indexQues--;
       } else if (indexQues >= listQuestions.length - 1) return;
@@ -770,7 +790,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
         .where((puzzle) => !puzzle.hintShow && puzzle.currentIndex == null)
         .toList();
 
-    if (puzzleNoHints.length > 0) {
+    if (puzzleNoHints.length > 0 && count2 > 0) {
       hintCount++;
       int indexHint = Random().nextInt(puzzleNoHints.length);
       int countTemp = 0;
@@ -782,6 +802,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
         if (indexHint == countTemp - 1) {
           puzzle.hintShow = true;
           puzzle.currentValue = puzzle.correctValue;
+          count2--;
           puzzle.currentIndex = currentQues.arrayBtns
               .indexWhere((btn) => btn == puzzle.correctValue);
         }
