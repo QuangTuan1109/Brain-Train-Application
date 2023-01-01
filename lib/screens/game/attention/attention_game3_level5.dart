@@ -4,27 +4,26 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/screens/game/attention/Level3/game/game_main.dart';
-import 'package:flutter_application_1/screens/game/attention/Level3/view/gamebar_view.dart';
+import 'package:flutter_application_1/screens/game/attention/Level5/game/game_main.dart';
+import 'package:flutter_application_1/screens/game/attention/Level5/view/gamebar_view.dart';
 // import 'package:freedefense/game/game_main.dart';
-
+import 'package:flutter_application_1/screens/game/attention/Level5/game/game_test.dart';
 import 'package:flutter_application_1/theme_color/light_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../general/app_route.dart';
-// import 'game/game_main_level2.dart';
 
-class TestAppView extends StatefulWidget {
-  const TestAppView({Key? key}) : super(key: key);
+class GameAtte3Level5 extends StatefulWidget {
+  const GameAtte3Level5({Key? key}) : super(key: key);
 
   @override
-  State<TestAppView> createState() => _TestAppViewState();
+  State<GameAtte3Level5> createState() => _GameAtte3Level5State();
 }
 
-class _TestAppViewState extends State<TestAppView> {
+class _GameAtte3Level5State extends State<GameAtte3Level5> {
   @override
   Widget build(BuildContext context) {
-    GameMain game = GameMain();
+    GameTest game = GameTest();
     return
         // WillPopScope(
         // onWillPop: () async {

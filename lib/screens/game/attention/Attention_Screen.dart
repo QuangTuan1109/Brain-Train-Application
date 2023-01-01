@@ -117,7 +117,7 @@ class AttentionScreen extends ConsumerWidget {
                       child: InkWell(
                         onTap: () {
                           Navigator.of(context)
-                              .pushNamed(RouteGenerator.game3atte);
+                              .pushNamed(RouteGenerator.levelattengame3);
                         },
                         child: const CustomStack(
                           image: 'images/shoping-math-game.jpg',
