@@ -13,6 +13,7 @@ class LanguageScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final auth = ref.watch(authProvider);
+    int cout = 0;
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -117,6 +118,7 @@ class LanguageScreen extends ConsumerWidget {
                         onTap: () {
                           Navigator.of(context)
                               .pushNamed(RouteGenerator.gameLetter);
+                          cout = 1;
                         },
                         child: const CustomStack(
                           image: 'images/shoping-math-game.jpg',

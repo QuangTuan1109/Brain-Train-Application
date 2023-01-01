@@ -1,0 +1,16 @@
+[
+  {
+    "speed": 50,
+    "scale": 1.0,
+    "image": "enemy/enemyA.png",
+    "columns": 2,
+    "rows": 3
+  },
+  {
+    "speed": 60,
+    "scale": 1.0,
+    "image": "enemy/enemyB.png",
+    "columns": 2,
+    "rows": 3
+  }
+]

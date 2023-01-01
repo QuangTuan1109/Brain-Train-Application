@@ -133,7 +133,7 @@ class Homepage extends ConsumerWidget {
                     InkWell(
                       onTap: () {
                         Navigator.of(context)
-                            .pushNamed('AppRoute.multiplayerSearch');
+                            .pushNamed(RouteGenerator.attentionScreen);
                       },
                       child: const CustomStack(
                         image: 'images/attention-background.png',

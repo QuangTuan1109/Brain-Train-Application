@@ -1,3 +1,5 @@
+// import 'dart:js';
+
 import 'package:flutter_application_1/screens/Game_Math1_Screen.dart';
 import 'package:flutter_application_1/screens/Signin_Screen.dart';
 import 'package:flutter_application_1/screens/Signup_Screen.dart';
@@ -9,7 +11,10 @@ import 'package:flutter_application_1/screens/game/languages/languaes_first_lett
 import 'package:flutter_application_1/screens/game/languages/languages_conjunction.dart';
 import 'package:flutter_application_1/screens/game/languages/languages_first_word.dart';
 import 'package:flutter_application_1/screens/game/languages/languages_word_sort.dart';
-
+//Attention Game
+import 'package:flutter_application_1/screens/game/attention/attention_game3.dart';
+import 'package:flutter_application_1/screens/game/attention/Attention_Screen.dart';
+import 'package:flutter_application_1/screens/game/attention/testgame3.dart';
 //Admin
 
 import 'package:flutter_application_1/screens/admin/admin_page.dart';
@@ -32,6 +37,11 @@ class RouteGenerator {
   static const gameConj = '/gameConj';
   static const gameSort = '/gameSort';
 
+  // Attention Game
+  static const game3atte = 'game3atte';
+  static const attentionScreen = '/attentionScreen';
+  static const gametest = 'gametest';
+
   //popup
   static const walkthrough_screen = '/walkthrough_screen';
   //admin_page
@@ -51,6 +61,11 @@ class RouteGenerator {
     gameWord: (context) => const LanguagesFirstWord(),
     gameConj: (context) => const LanguageGameThree(),
     gameSort: (context) => const WordFind(),
+
+    // Attention Game
+    game3atte: (context) => const AppView(),
+    gametest: (context) => const TestAppView(),
+    attentionScreen: (context) => const AttentionScreen(),
 
     //admin
 

@@ -59,6 +59,7 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   get: ^4.6.5
   percent_indicator: ^4.2.2
+  flame: ^1.5.0
 
 dev_dependencies:
   flutter_test:
@@ -96,6 +97,10 @@ flutter:
     - lib/data/data_language/question_languages_two.json
     - lib/data/data_language/word.json
     - assets/images/
+    - assets/images/weapon/
+    - assets/images/enemy/
+    - assets/weaponParams.json
+    - assets/enemyParams.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
