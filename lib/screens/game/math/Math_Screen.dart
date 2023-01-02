@@ -5,6 +5,7 @@ import 'package:flutter_application_1/general/app_route.dart';
 import 'package:flutter_application_1/provider/auth.dart';
 import 'package:flutter_application_1/provider/room.dart';
 import 'package:flutter_application_1/screens/home/stack_custom.dart';
+import 'package:flutter_application_1/widgets/components/button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MathScreen extends ConsumerWidget {
@@ -116,7 +117,7 @@ class MathScreen extends ConsumerWidget {
                       padding: const EdgeInsets.only(top: 25),
                       child: InkWell(
                         onTap: () {
-                          room.TimeGameMath1();
+                          room.initTimeGameMath1();
                           Navigator.of(context)
                               .pushNamed(RouteGenerator.gameMath1);
                         },
@@ -124,7 +125,7 @@ class MathScreen extends ConsumerWidget {
                           image: 'images/shoping-math-game.jpg',
                           icon: 'images/shoping-math-game-icon.jpg',
                           text1: 'Trò Chơi Mua Sắm',
-                          text2: '4 Trò Chơi',
+                          text2: 'Chọn sản phẩm có giá ít hơn',
                           padding_left: 5,
                           padding_top: 45,
                           padding: 0,
@@ -134,14 +135,15 @@ class MathScreen extends ConsumerWidget {
                     ),
                     InkWell(
                       onTap: () {
+                        room.initTimeGameMath2();
                         Navigator.of(context)
-                            .pushNamed('AppRoute.multiplayerSearch');
+                            .pushNamed(RouteGenerator.gameMath2);
                       },
                       child: const CustomStack(
                         image: 'images/plus-math-game-background.png',
                         icon: 'images/plus-math-game-icon.png',
                         text1: 'Trò Chơi Tìm Tổng',
-                        text2: '4 Trò Chơi',
+                        text2: 'Tìm tổng 2 số theo yêu cầu',
                         padding_left: 7,
                         padding_top: 80,
                         padding: 28,
@@ -149,6 +151,11 @@ class MathScreen extends ConsumerWidget {
                       ),
                     ),
                   ]),
+              Button(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(RouteGenerator.homepage);
+                  },
+                  text: 'Trang chủ')
             ],
           ),
         ),

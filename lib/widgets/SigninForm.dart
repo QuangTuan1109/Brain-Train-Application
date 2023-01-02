@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/general/app_route.dart';
+import 'package:flutter_application_1/provider/auth.dart';
 import 'package:flutter_application_1/widgets/components/InputForm.dart';
 import 'package:flutter_application_1/widgets/components/button.dart';
 import 'package:flutter_application_1/widgets/components/checkboxList.dart';
@@ -97,13 +99,25 @@ class _SigninFormState extends State<SigninForm> {
             ),
           ),
           Consumer(builder: (context, ref, child) {
+            final auth = ref.read(authProvider);
             return Button(
                 onPressed: () async {
                   setState(() {
                     isSubmitted = true;
                   });
                   if (emailErrorText != null || passwordErrorText != null) {
+                    return;
+                  }
+
+                  try {
+                    await auth.Signin(SigninMethod.email,
+                        email: emailConntroller.text,
+                        password: passwordConntroller.text);
                     Navigator.of(context).pushNamed('/homepage');
+                  } catch (e) {
+                    setState(() {
+                      isLoading = false;
+                    });
                   }
                 },
                 text: 'Đăng Nhập');

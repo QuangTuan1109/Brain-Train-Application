@@ -12,12 +12,16 @@ import 'general/app_route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+  Firebase.initializeApp();
+  //runApp(const MyApp());
+
   final sharedPreferences = await SharedPreferences.getInstance();
-  await Firebase.initializeApp();
   runApp(ProviderScope(
     child: MyApp(),
     overrides: [spProvider.overrideWithValue(sharedPreferences)],
@@ -35,6 +39,7 @@ class MyApp extends StatelessWidget {
       final futureAuth = ref.watch(futureAuthProvider);
       return MaterialApp(
         debugShowCheckedModeBanner: false,
+        //home: SigninScreen(),
         home: futureAuth.when(data: (data) {
           return auth.isAuth ? Homepage() : SigninScreen();
         }, error: (e, st) {

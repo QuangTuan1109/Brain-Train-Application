@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/provider/auth.dart';
+import 'package:flutter_application_1/provider/auth_test2.dart';
 import 'package:flutter_application_1/widgets/components/InputForm.dart';
 import 'package:flutter_application_1/widgets/components/button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -95,7 +98,7 @@ class _SignupState extends State<Signup> {
         children: [
           InputForm(
             onFocusChange: (_) => setState((() {})),
-            onChanged: (_) => setState((() {})),
+            onChanged: (value) => setState((() {})),
             onFieldSubmitted: (_) => emailNode.requestFocus(),
             obscureText: _isVisible,
             controller: emailConntroller,
@@ -109,7 +112,7 @@ class _SignupState extends State<Signup> {
           ),
           InputForm(
             onFocusChange: (_) => setState((() {})),
-            onChanged: (_) => setState((() {})),
+            onChanged: (value) => setState((() {})),
             onFieldSubmitted: (_) => passwordNode.requestFocus(),
             obscureText: _isVisible ? false : true,
             controller: passwordConntroller,
@@ -153,7 +156,7 @@ class _SignupState extends State<Signup> {
           ),
           InputForm(
             onFocusChange: (_) => setState((() {})),
-            onChanged: (_) => setState((() {})),
+            onChanged: (value) => setState((() {})),
             onFieldSubmitted: (_) => emailNode.requestFocus(),
             obscureText: _isVisible,
             controller: usernameConntroller,
@@ -194,7 +197,6 @@ class _SignupState extends State<Signup> {
                     print(pickedDate);
                     String formattedDate =
                         DateFormat('yyyy-MM-dd').format(pickedDate);
-                    print(formattedDate);
 
                     setState(() {
                       dateinput.text = formattedDate;
@@ -211,23 +213,23 @@ class _SignupState extends State<Signup> {
                   setState(() {
                     isSubmitted = true;
                   });
-                  // if (emailErrorText != null || passwordErrorText != null) {
-                  //   return;
-                  // }
+                  if (emailErrorText != null || passwordErrorText != null) {
+                    return;
+                  }
                   setState(() {
                     isLoading = true;
                   });
                   try {
                     auth.Signup(
-                      name: usernameConntroller.text.trim(),
-                      email: emailConntroller.text,
-                      password: passwordConntroller.text,
-                    );
+                        name: usernameConntroller.text.trim(),
+                        email: emailConntroller.text,
+                        password: passwordConntroller.text,
+                        Gender: _gender.toString(),
+                        DOB: dateinput.text);
                   } catch (e) {
                     setState(() {
                       isLoading = false;
                     });
-                    print('nooooo');
                   }
                 },
                 text: 'Đăng Ký');

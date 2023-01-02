@@ -3,20 +3,15 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/data/data_question_math1.dart';
 import 'package:flutter_application_1/models/questions_math1_model.dart';
+import 'package:flutter_application_1/models/user_model.dart';
+import 'package:flutter_application_1/provider/auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/*
-**********COMMENT CODE QUESTIONS PROVIDER**********
+enum AnswerCardStatus { normal, disable, erorr, right, isPressed }
 
-  - Declare enum AnswerCardStatus include 4 status for answers. 
-  - One question will have attributes: 
-    + Current level (The round of each questions).
-    + Current question index: Identify the index of question in data_question_math1.dart (Having 100 questions).
-    + Current question answer index: Identify the index of answer for each question. Each question has 2 answer.
-    + isFisnish called when finish game. Initial value is FALSE (It mean that hasn't finish yet).
-    + Current score: Score of phayer through each round.
- */
-
-enum AnswerCardStatus { normal, disable, erorr, right }
+final questionsProvider = ChangeNotifierProvider<Questions>((ref) {
+  return Questions(ref.watch(authProvider).user);
+});
 
 class Questions extends ChangeNotifier {
   int? currentLevel;
@@ -28,6 +23,8 @@ class Questions extends ChangeNotifier {
 
   Timer? timer;
   int seconds = 60;
+
+  Questions(Users user);
 
   Questions_Math1_model get currentQuestion =>
       questions[currentLevel! * 4 + currentQuestionIndex];
@@ -87,6 +84,18 @@ class Questions extends ChangeNotifier {
       currentQuestionIndex++;
       currentQuestionAnswerIndex = null;
     }
+    notifyListeners();
+  }
+
+  void reset() {
+    currentScore = null;
+    seconds = 60;
+    timer = null;
+    currentLevel = null;
+    currentQuestionIndex = 0;
+    rightAnswer = 0;
+    isFinish = false;
+    currentQuestionAnswerIndex = null;
     notifyListeners();
   }
 }

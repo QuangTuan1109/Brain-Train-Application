@@ -1,12 +1,14 @@
-// import 'dart:js';
 
-// import 'dart:js';
 
-import 'package:flutter_application_1/screens/Game_Math1_Screen.dart';
+
+import 'package:flutter_application_1/screens/game/math/Game_Math1_Screen.dart';
+
 import 'package:flutter_application_1/screens/Signin_Screen.dart';
 import 'package:flutter_application_1/screens/Signup_Screen.dart';
+import 'package:flutter_application_1/screens/game/math/Game_Math2_Screen.dart';
 import 'package:flutter_application_1/screens/game/math/Math_Screen.dart';
 import 'package:flutter_application_1/screens/home/homepage.dart';
+
 //Languages Game
 import 'package:flutter_application_1/screens/game/languages/Language_Screen.dart';
 import 'package:flutter_application_1/screens/game/languages/languaes_first_letter.dart';
@@ -34,14 +36,19 @@ import 'package:flutter_application_1/screens/admin/admin_page.dart';
 
 //popup
 
+import 'package:flutter_application_1/screens/setting/Setting_Screen.dart';
+
+
 class RouteGenerator {
   const RouteGenerator._();
 
   static const signin = '/signin';
   static const signup = '/signup';
   static const homepage = '/homepage';
+  static const setting = '/setting';
   static const mathScreen = '/mathScreen';
   static const gameMath1 = '/gameMath1';
+  static const gameMath2 = '/gameMath2';
 
   //Languages Game
   static const languageScreen = '/languageScreen';
@@ -76,8 +83,10 @@ class RouteGenerator {
     signin: (context) => const SigninScreen(),
     signup: (context) => const SignupScreen(),
     homepage: (context) => const Homepage(),
+    setting: (context) => const SettingsScreen(),
     mathScreen: (context) => const MathScreen(),
     gameMath1: (context) => const GameMath1Screen(),
+
 
     //Languages Game
     languageScreen: (context) => const LanguageScreen(),
@@ -104,5 +113,8 @@ class RouteGenerator {
     //admin
 
     admin_page2: (context) => const Adminpage(),
+
+    gameMath2: (context) => const GameMath2Screen(),
+
   };
 }
