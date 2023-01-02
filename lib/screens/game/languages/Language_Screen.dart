@@ -121,8 +121,8 @@ class LanguageScreen extends ConsumerWidget {
                           cout = 1;
                         },
                         child: const CustomStack(
-                          image: 'images/shoping-math-game.jpg',
-                          icon: 'images/shoping-math-game-icon.jpg',
+                          image: 'images/game_languages1.png',
+                          icon: 'images/game_languages1.png',
                           text1: 'Tìm từ bắt đầu với',
                           text2: '',
                           padding_left: 5,
@@ -138,8 +138,8 @@ class LanguageScreen extends ConsumerWidget {
                             .pushNamed(RouteGenerator.gameWord);
                       },
                       child: const CustomStack(
-                        image: 'images/plus-math-game-background.png',
-                        icon: 'images/plus-math-game-icon.png',
+                        image: 'images/game_languages2.png',
+                        icon: 'images/game_languages2.png',
                         text1: 'Tìm từ tiếp theo',
                         text2: '',
                         padding_left: 7,
@@ -154,8 +154,8 @@ class LanguageScreen extends ConsumerWidget {
                             .pushNamed(RouteGenerator.gameConj);
                       },
                       child: const CustomStack(
-                        image: 'images/plus-math-game-background.png',
-                        icon: 'images/plus-math-game-icon.png',
+                        image: 'images/game_languages3.png',
+                        icon: 'images/game_languages3.png',
                         text1: 'Nối Từ',
                         text2: '',
                         padding_left: 7,
@@ -170,8 +170,8 @@ class LanguageScreen extends ConsumerWidget {
                             .pushNamed(RouteGenerator.gameSort);
                       },
                       child: const CustomStack(
-                        image: 'images/plus-math-game-background.png',
-                        icon: 'images/plus-math-game-icon.png',
+                        image: 'images/game_languages4.png',
+                        icon: 'images/game_languages4.png',
                         text1: 'Sắp xếp từ',
                         text2: '',
                         padding_left: 7,
