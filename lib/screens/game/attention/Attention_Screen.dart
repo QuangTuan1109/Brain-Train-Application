@@ -134,6 +134,22 @@ class AttentionScreen extends ConsumerWidget {
                     InkWell(
                       onTap: () {
                         Navigator.of(context)
+                            .pushNamed(RouteGenerator.game2Atten);
+                      },
+                      child: const CustomStack(
+                        image: 'images/game_attention2.png',
+                        icon: 'images/game_attention2.png',
+                        text1: 'Bắt cá',
+                        text2: '10 Cấp độ',
+                        padding_left: 5,
+                        padding_top: 45,
+                        padding: 0,
+                        color: Color(0xff2D2D2D),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context)
                             .pushNamed(RouteGenerator.levelattengame3);
                       },
                       child: const CustomStack(

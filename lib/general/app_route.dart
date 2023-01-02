@@ -27,6 +27,7 @@ import 'package:flutter_application_1/screens/game/attention/Attention_Screen.da
 import 'package:flutter_application_1/screens/game/attention/testgame3.dart';
 import 'package:flutter_application_1/screens/game/attention/menu_Level_game3.dart';
 import 'package:flutter_application_1/screens/game/attention/attention_game1.dart';
+import 'package:flutter_application_1/screens/game/attention/attention_two_screen.dart';
 
 //memory
 import 'package:flutter_application_1/screens/game/memory/Memory_Screen.dart';
@@ -80,6 +81,7 @@ class RouteGenerator {
   static const gametest = 'gametest';
   static const levelattengame3 = 'levelattengame3';
   static const game1Atten = '/game1Atten';
+  static const game2Atten = '/game2Atten';
 
   //popup
   static const walkthrough_screen = '/walkthrough_screen';
@@ -123,6 +125,7 @@ class RouteGenerator {
     attentionScreen: (context) => const AttentionScreen(),
     levelattengame3: (context) => const LevelsScreen(),
     game1Atten: (context) => const AttentionGameOne(),
+    game2Atten: (context) => const AttentionTwoScreen(),
     //admin
 
     admin_page2: (context) => const Adminpage(),

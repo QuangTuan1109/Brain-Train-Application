@@ -1,4 +1,4 @@
-import '../model/tile_model_one.dart';
+import 'package:flutter_application_1/models/tile_model_one.dart';
 
 bool selected = false;
 List<TileModel> pairs = [];

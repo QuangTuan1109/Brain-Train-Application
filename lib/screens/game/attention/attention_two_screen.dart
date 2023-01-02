@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:brain_train_memory/data/data_attention_two.dart';
-import 'package:brain_train_memory/model/tile_model_one.dart';
-import 'package:brain_train_memory/test_screen.dart';
-import 'package:brain_train_memory/widget/score_board.dart';
+import 'package:flutter_application_1/data/data_attention/data_attention_two.dart';
+import 'package:flutter_application_1/models/tile_model_one.dart';
+// import 'package:brain_train_memory/test_screen.dart';
+import 'package:flutter_application_1/widgets/components/score_board.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -159,11 +159,7 @@ class _AttentionTwoScreenState extends State<AttentionTwoScreen> {
         "assets/correct.png", () {
       Navigator.of(context).pop();
       setState(() {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TestScreen(),
-            ));
+        Navigator.pop(context, back);
       });
     });
   }
@@ -259,6 +255,7 @@ class _AttentionTwoScreenState extends State<AttentionTwoScreen> {
 
   // correct = getCorrect();
   start() {
+    level = 1;
     save = [];
     numOfPairs = 0;
     getTimer();
@@ -363,137 +360,172 @@ class _AttentionTwoScreenState extends State<AttentionTwoScreen> {
   final double runSpacing = 10;
   final double spacing = 4;
   // final int columns = 4;
+  bool back = false;
+
+  Future<bool?> showMyDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Bạn có muốn thoát ra ?'),
+          actions: [
+            TextButton(
+              child: Text('Không'),
+              onPressed: () {
+                back = false;
+                Navigator.pop(context, back);
+              },
+            ),
+            TextButton(
+              child: Text('Có'),
+              onPressed: () {
+                back = true;
+                Navigator.pop(context, back);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     double screen_width = MediaQuery.of(context).size.width;
     final w = (MediaQuery.of(context).size.width - runSpacing * (columns - 1)) /
         columns;
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xffd23369), Color(0xffff597b)],
-              begin: FractionalOffset(0.5, 1),
-            ),
-          ),
-          width: screen_width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Icons
-              Row(
-                // crossAxisAlignment: CrossAxisAlignment.spaceBetween,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          print("Back Here");
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const HomePage()));
-                        },
-                        icon: const Icon(Icons.arrow_back_ios),
-                        iconSize: 30,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          print("Back Here");
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const HomePage()));
-                        },
-                        icon: const Icon(Icons.lightbulb_outline),
-                        iconSize: 30,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          print("Back Here");
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const HomePage()));
-                        },
-                        icon: const Icon(Icons.settings),
-                        iconSize: 30,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              // SizedBox(
-              //   height: 50,
-              // ),
-              Container(
-                width: screen_width,
-                child: Column(
-                  children: [
-                    Text(
-                      "Lượt chơi: $level/10",
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        scoreBoard("Thời gian", "${timerDuration.inSeconds}"),
-                        // scoreBoard("Điểm", "$score"),
-                        scoreBoard("Điểm", "$score"),
-                      ],
-                    ),
-                  ],
+    return WillPopScope(
+        onWillPop: () async {
+          final back = await showMyDialog(context);
+          return back ?? false;
+        },
+        child: SafeArea(
+          child: Scaffold(
+            body: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xffd23369), Color(0xffff597b)],
+                  begin: FractionalOffset(0.5, 1),
                 ),
               ),
-              isLoading
-                  ? Expanded(
-                      child: Center(
-                      child: getLoading(),
-                    ))
-                  : Expanded(
-                      child: Center(
-                        child: Container(
-                          // decoration: BoxDecoration(color: Colors.amber),
-                          child: Wrap(
-                            runSpacing: runSpacing,
-                            spacing: spacing,
-                            alignment: WrapAlignment.center,
-                            children: List.generate(visible.length, (index) {
-                              return Container(
-                                width: w,
-                                height: w,
-                                child: Tile(
-                                    imageAssetPath:
-                                        visible[index].getImageAssetPath(),
-                                    tileIndex: index,
-                                    parent: this),
-                              );
-                            }),
+              width: screen_width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Icons
+                  Row(
+                    // crossAxisAlignment: CrossAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              print("Back Here");
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const HomePage()));
+                            },
+                            icon: const Icon(Icons.arrow_back_ios),
+                            iconSize: 30,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              print("Back Here");
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const HomePage()));
+                            },
+                            icon: const Icon(Icons.lightbulb_outline),
+                            iconSize: 30,
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              print("Back Here");
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const HomePage()));
+                            },
+                            icon: const Icon(Icons.settings),
+                            iconSize: 30,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  // SizedBox(
+                  //   height: 50,
+                  // ),
+                  Container(
+                    width: screen_width,
+                    child: Column(
+                      children: [
+                        Text(
+                          "Lượt chơi: $level/10",
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                    )
-            ],
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            scoreBoard(
+                                "Thời gian", "${timerDuration.inSeconds}"),
+                            // scoreBoard("Điểm", "$score"),
+                            scoreBoard("Điểm", "$score"),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  isLoading
+                      ? Expanded(
+                          child: Center(
+                          child: getLoading(),
+                        ))
+                      : Expanded(
+                          child: Center(
+                            child: Container(
+                              // decoration: BoxDecoration(color: Colors.amber),
+                              child: Wrap(
+                                runSpacing: runSpacing,
+                                spacing: spacing,
+                                alignment: WrapAlignment.center,
+                                children:
+                                    List.generate(visible.length, (index) {
+                                  return Container(
+                                    width: w,
+                                    height: w,
+                                    child: Tile(
+                                        imageAssetPath:
+                                            visible[index].getImageAssetPath(),
+                                        tileIndex: index,
+                                        parent: this),
+                                  );
+                                }),
+                              ),
+                            ),
+                          ),
+                        )
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 

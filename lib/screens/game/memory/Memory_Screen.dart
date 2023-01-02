@@ -120,8 +120,8 @@ class MemoryScreen extends ConsumerWidget {
                               .pushNamed(RouteGenerator.gameMemory1);
                         },
                         child: const CustomStack(
-                          image: 'images/shoping-math-game.jpg',
-                          icon: 'images/shoping-math-game-icon.jpg',
+                          image: 'images/game_memory1.png',
+                          icon: 'images/game_memory1.png',
                           text1: 'Trò Chơi Mua Sắm',
                           text2: '4 Trò Chơi',
                           padding_left: 5,
@@ -137,8 +137,8 @@ class MemoryScreen extends ConsumerWidget {
                             .pushNamed(RouteGenerator.gameMemory2);
                       },
                       child: const CustomStack(
-                        image: 'images/plus-math-game-background.png',
-                        icon: 'images/plus-math-game-icon.png',
+                        image: 'images/game_memory2.png',
+                        icon: 'images/game_memory2.png',
                         text1: 'Trò Chơi Tìm Tổng',
                         text2: '4 Trò Chơi',
                         padding_left: 7,
@@ -153,8 +153,8 @@ class MemoryScreen extends ConsumerWidget {
                             .pushNamed(RouteGenerator.gameMemory3);
                       },
                       child: const CustomStack(
-                        image: 'images/plus-math-game-background.png',
-                        icon: 'images/plus-math-game-icon.png',
+                        image: 'images/game_memory3.png',
+                        icon: 'images/game_memory3.png',
                         text1: 'Trò Chơi Tìm Tổng',
                         text2: '4 Trò Chơi',
                         padding_left: 7,
