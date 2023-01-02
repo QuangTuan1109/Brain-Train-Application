@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         //home: SigninScreen(),
         home: futureAuth.when(data: (data) {
-          return auth.isAuth ? Homepage() : SigninScreen();
+          return auth.isAuth ? Homepage() : Homepage();
         }, error: (e, st) {
           return Scaffold(
             body: Center(child: Text(e.toString())),

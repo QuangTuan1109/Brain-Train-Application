@@ -117,34 +117,34 @@ class AttentionScreen extends ConsumerWidget {
                       child: InkWell(
                         onTap: () {
                           Navigator.of(context)
-                              .pushNamed(RouteGenerator.levelattengame3);
+                              .pushNamed(RouteGenerator.game1Atten);
                         },
                         child: const CustomStack(
-                          image: 'images/shoping-math-game.jpg',
-                          icon: 'images/shoping-math-game-icon.jpg',
-                          text1: 'Trò Chơi Mua Sắm',
-                          text2: '4 Trò Chơi',
-                          padding_left: 5,
-                          padding_top: 45,
-                          padding: 0,
-                          color: Color(0xff2D2D2D),
+                          image: 'images/game_attention1.png',
+                          icon: 'images/game_attention1.png',
+                          text1: 'Tim kiếm',
+                          text2: '40 màn',
+                          padding_left: 7,
+                          padding_top: 80,
+                          padding: 28,
+                          color: Color(0xff444444),
                         ),
                       ),
                     ),
                     InkWell(
                       onTap: () {
                         Navigator.of(context)
-                            .pushNamed(RouteGenerator.game1Atten);
+                            .pushNamed(RouteGenerator.levelattengame3);
                       },
                       child: const CustomStack(
-                        image: 'images/plus-math-game-background.png',
-                        icon: 'images/plus-math-game-icon.png',
-                        text1: 'Trò Chơi Tìm Tổng',
-                        text2: '4 Trò Chơi',
-                        padding_left: 7,
-                        padding_top: 80,
-                        padding: 28,
-                        color: Color(0xff444444),
+                        image: 'images/game_attention3.png',
+                        icon: 'assets/images/weapon/Missile.png',
+                        text1: 'Bắt cá',
+                        text2: '10 Cấp độ',
+                        padding_left: 5,
+                        padding_top: 45,
+                        padding: 0,
+                        color: Color(0xff2D2D2D),
                       ),
                     ),
                   ]),

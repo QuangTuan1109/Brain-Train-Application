@@ -54,68 +54,80 @@ class LevelsScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 10, right: 10),
+                // padding: const EdgeInsets.only(
+                //     top: 10, bottom: 10, left: 10, right: 10),
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(RouteGenerator.game3atte1);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 37, bottom: 10),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset('assets/images/level.png'),
-                            Text(
-                              'Level 1',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
+                    Column(children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(RouteGenerator.game3atte1);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/icon_shark.png',
+                                height: 200,
+                                width: 190,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+                      Text(
+                        'Level 1',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ])
                   ],
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 10, right: 10),
+                // padding: const EdgeInsets.only(
+                //     top: 10, bottom: 10, left: 10, right: 10),
                 child: Stack(
                   alignment: Alignment.topCenter,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(RouteGenerator.game3atte2);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 37, bottom: 10),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset('assets/images/level.png'),
-                            Text(
-                              'Level 2',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
+                    Column(children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(RouteGenerator.game3atte2);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/icon_shark.png',
+                                height: 200,
+                                width: 190,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+                      Text(
+                        'Level 2',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ])
                   ],
                 ),
               ),
@@ -125,140 +137,80 @@ class LevelsScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 10, right: 10),
+                // padding: const EdgeInsets.only(
+                //     top: 10, bottom: 10, left: 10, right: 10),
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(RouteGenerator.game3atte3);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 37, bottom: 10),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset('assets/images/level.png'),
-                            Text(
-                              'Level 3',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
+                    Column(children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(RouteGenerator.game3atte3);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/icon_shark.png',
+                                height: 200,
+                                width: 190,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+                      Text(
+                        'Level 3',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ])
                   ],
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 10, right: 10),
+                // padding: const EdgeInsets.only(
+                //     top: 10, bottom: 10, left: 10, right: 10),
                 child: Stack(
                   alignment: Alignment.topCenter,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(RouteGenerator.game3atte4);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 37, bottom: 10),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset('assets/images/level.png'),
-                            Text(
-                              'Level 4',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
+                    Column(children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(RouteGenerator.game3atte4);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/icon_shark.png',
+                                height: 200,
+                                width: 190,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 10, right: 10),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(RouteGenerator.game3atte5);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 37, bottom: 10),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset('assets/images/level.png'),
-                            Text(
-                              'Level 5',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                              ),
-                            ),
-                          ],
+                      Text(
+                        'Level 4',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 10, right: 10),
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(RouteGenerator.game3atte6);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 37, bottom: 10),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset('assets/images/level.png'),
-                            Text(
-                              'Level 6',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    ])
                   ],
                 ),
               ),
@@ -268,68 +220,80 @@ class LevelsScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 10, right: 10),
+                // padding: const EdgeInsets.only(
+                //     top: 10, bottom: 10, left: 10, right: 10),
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(RouteGenerator.game3atte7);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 37, bottom: 10),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset('assets/images/level.png'),
-                            Text(
-                              'Level 7',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
+                    Column(children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(RouteGenerator.game3atte5);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/icon_shark.png',
+                                height: 200,
+                                width: 190,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+                      Text(
+                        'Level 5',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ])
                   ],
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 10, right: 10),
+                // padding: const EdgeInsets.only(
+                //     top: 10, bottom: 10, left: 10, right: 10),
                 child: Stack(
                   alignment: Alignment.topCenter,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(RouteGenerator.game3atte8);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 37, bottom: 10),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset('assets/images/level.png'),
-                            Text(
-                              'Level 8',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
+                    Column(children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(RouteGenerator.game3atte6);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/icon_shark.png',
+                                height: 200,
+                                width: 190,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+                      Text(
+                        'Level 6',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ])
                   ],
                 ),
               ),
@@ -339,68 +303,163 @@ class LevelsScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 10, right: 10),
+                // padding: const EdgeInsets.only(
+                //     top: 10, bottom: 10, left: 10, right: 10),
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(RouteGenerator.game3atte9);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 37, bottom: 10),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset('assets/images/level.png'),
-                            Text(
-                              'Level 9',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
+                    Column(children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(RouteGenerator.game3atte7);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/icon_shark.png',
+                                height: 200,
+                                width: 190,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+                      Text(
+                        'Level 7',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ])
                   ],
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 10, right: 10),
+                // padding: const EdgeInsets.only(
+                //     top: 10, bottom: 10, left: 10, right: 10),
                 child: Stack(
                   alignment: Alignment.topCenter,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(RouteGenerator.game3atte10);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 37, bottom: 10),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset('assets/images/level.png'),
-                            Text(
-                              'Level 10',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
+                    Column(children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(RouteGenerator.game3atte8);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/icon_shark.png',
+                                height: 200,
+                                width: 190,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+                      Text(
+                        'Level 8',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ])
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                // padding: const EdgeInsets.only(
+                //     top: 10, bottom: 10, left: 10, right: 10),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Column(children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(RouteGenerator.game3atte9);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/icon_shark.png',
+                                height: 200,
+                                width: 190,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'Level 9',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ])
+                  ],
+                ),
+              ),
+              Container(
+                // padding: const EdgeInsets.only(
+                //     top: 10, bottom: 10, left: 10, right: 10),
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Column(children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(RouteGenerator.game3atte10);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/icon_shark.png',
+                                height: 200,
+                                width: 190,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'Level 10',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ])
                   ],
                 ),
               ),
