@@ -140,35 +140,6 @@ class _AttentionGameOneState extends State<AttentionGameOne> {
         SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              // Text(
-              //   "Số vòng chơi vượt qua: ${correctAnswer}",
-              //   textAlign: TextAlign.center,
-              //   style: TextStyle(fontWeight: FontWeight.w500),
-              // ),
-              // const SizedBox(height: 5),
-              // Text(
-              //   "Thời gian trung bình: ${avgTime} giây",
-              //   textAlign: TextAlign.center,
-              //   style: TextStyle(fontWeight: FontWeight.w500),
-              // ),
-              // const SizedBox(height: 5),
-              // Text(
-              //   "Điểm: $point",
-              //   textAlign: TextAlign.center,
-              //   style: TextStyle(fontWeight: FontWeight.w500),
-              // ),
-              // const SizedBox(height: 5),
-              // Text(
-              //   "Điểm thưởng: $bonusPoint",
-              //   textAlign: TextAlign.center,
-              //   style: TextStyle(fontWeight: FontWeight.w500),
-              // ),
-              // const SizedBox(height: 5),
-              // Text(
-              //   "Tổng điểm: $totalPoint",
-              //   textAlign: TextAlign.center,
-              //   style: TextStyle(fontWeight: FontWeight.w500),
-              // ),
               Text(
                 "Số vòng chơi vượt qua: ${correctAnswer}",
                 textAlign: TextAlign.center,
@@ -807,87 +778,5 @@ class _AttentionGameOneState extends State<AttentionGameOne> {
         ),
       ),
     );
-
-    // return Scaffold(
-    //     appBar: AppBar(
-    //       title: Text("Tổng thời gian còn lại: $totalSeconds"),
-    //       backgroundColor: Colors.green,
-    //       titleTextStyle: const TextStyle(
-    //         color: Colors.black,
-    //         fontSize: 20,
-    //         fontWeight: FontWeight.w700,
-    //       ),
-    //     ),
-    //     body: Column(
-    //       children: [
-    //         Padding(
-    //           padding: const EdgeInsets.only(top: 15, bottom: 10),
-    //           child: Text(
-    //             "Điểm: $point",
-    //             style: const TextStyle(
-    //                 fontWeight: FontWeight.w700,
-    //                 color: Colors.orange,
-    //                 fontSize: 35),
-    //           ),
-    //         ),
-    //         Clock(seconds: seconds),
-    //         SizedBox(height: 30),
-    //         imagesAssetPath.isNotEmpty && gameData.isNotEmpty
-    //             ? Column(children: [
-    //                 Padding(
-    //                   padding: const EdgeInsets.only(bottom: 10),
-    //                   child: Text(
-    //                     gameData[currentKey - 1]["title"],
-    //                     textAlign: TextAlign.center,
-    //                     style: const TextStyle(
-    //                         color: Colors.black,
-    //                         fontSize: 24,
-    //                         fontWeight: FontWeight.w500),
-    //                   ),
-    //                 ),
-    //                 Container(
-    //                     height: boxHeight,
-    //                     child: ClipRRect(
-    //                         borderRadius: BorderRadius.circular(20),
-    //                         child: Material(
-    //                             child: !isCorrect
-    //                                 ? Ink.image(
-    //                                     image: AssetImage(
-    //                                         imagesAssetPath[currentQuestion]),
-    //                                     fit: BoxFit.scaleDown,
-    //                                     child: InkWell(
-    //                                       onTapDown: !endGame
-    //                                           ? (TapDownDetails details) =>
-    //                                               onTapDown(context, details)
-    //                                           : null,
-    //                                     ))
-    //                                 : Ink.image(
-    //                                     image: AssetImage(solutionAssetPath
-    //                                         .firstWhere((element) =>
-    //                                             element.split("/").last ==
-    //                                             imagesAssetPath[currentQuestion]
-    //                                                 .split("/")
-    //                                                 .last)),
-    //                                     fit: BoxFit.scaleDown,
-    //                                   ))))
-    //               ])
-    //             : Container(),
-    //         SizedBox(height: 32),
-    //         !endGame &&
-    //                 isCorrect &&
-    //                 currentQuestion < imagesAssetPath.length - 1
-    //             ? ElevatedButton(
-    //                 onPressed: () => nextQuestion(),
-    //                 child: Padding(
-    //                     padding: EdgeInsets.all(10),
-    //                     child:
-    //                         Text("Tiếp theo", style: TextStyle(fontSize: 24))),
-    //                 style: ElevatedButton.styleFrom(
-    //                     backgroundColor: Colors.orange))
-    //             : Container()
-    //       ],
-    //     )
-    //     );
   }
 }
-                                                                            
