@@ -151,11 +151,11 @@ class MathScreen extends ConsumerWidget {
                       ),
                     ),
                   ]),
-              Button(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(RouteGenerator.homepage);
-                  },
-                  text: 'Trang chủ')
+              // Button(
+              //     onPressed: () {
+              //       Navigator.of(context).pushNamed(RouteGenerator.homepage);
+              //     },
+              //     text: 'Trang chủ')
             ],
           ),
         ),

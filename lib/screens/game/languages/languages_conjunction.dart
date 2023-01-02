@@ -305,6 +305,17 @@ class _LanguageGameThreeState extends State<LanguageGameThree> {
                                             ),
                                             color: Colors.black,
                                           ),
+                                          IconButton(
+                                            onPressed: () {
+                                              stopTime = true;
+                                              setEndTimer();
+                                            },
+                                            icon: const Icon(
+                                              Icons.flag_circle_rounded,
+                                              size: 40,
+                                            ),
+                                            color: Colors.black,
+                                          ),
                                         ],
                                       ),
                                       Row(

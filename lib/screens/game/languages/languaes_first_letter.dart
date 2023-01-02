@@ -474,6 +474,17 @@ class _LanguagesFirstLetterState extends State<LanguagesFirstLetter> {
                                             ),
                                             color: Colors.black,
                                           ),
+                                          IconButton(
+                                            onPressed: () {
+                                              stopTime = true;
+                                              setEndTimer();
+                                            },
+                                            icon: const Icon(
+                                              Icons.flag_circle_rounded,
+                                              size: 40,
+                                            ),
+                                            color: Colors.black,
+                                          ),
                                         ],
                                       ),
                                       Row(
@@ -492,7 +503,7 @@ class _LanguagesFirstLetterState extends State<LanguagesFirstLetter> {
                                           IconButton(
                                             onPressed: () {
                                               stopTime = true;
-                                              _dialogBuilderTwo(context);
+                                              setEndTimer();
                                             },
                                             icon: const Icon(
                                               Icons.settings,

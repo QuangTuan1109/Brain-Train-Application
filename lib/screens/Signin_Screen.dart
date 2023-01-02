@@ -38,7 +38,7 @@ class SigninScreen extends ConsumerWidget {
                                   color: Colors.black54, fontSize: 16))),
                           IconButtonCus(
                               onPressed: (() {
-                                Navigator.of(context).pushNamed('/signup');
+                                Navigator.of(context).pushNamed('/homepage');
                               }),
                               text: 'Đăng kí ngay!')
                         ],
