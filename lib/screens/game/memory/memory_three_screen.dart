@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:brain_train_memory/data/data_memory_three.dart';
-import 'package:brain_train_memory/test_screen.dart';
-import 'package:brain_train_memory/widget/score_board.dart';
+import 'package:flutter_application_1/data/data_memory/data_memory_three.dart';
+import 'package:flutter_application_1/screens/game/memory/result_screen_3.dart';
+import 'package:flutter_application_1/widgets/components/score_board.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -119,6 +119,28 @@ class _MemoryThreeScreenState extends State<MemoryThreeScreen> {
                       ),
                     ),
                   ),
+                  Positioned(
+                    left: 0,
+                    bottom: 45,
+                    child: Column(
+                      children: [
+                        Text(
+                          "Điểm số: $score",
+                          style: TextStyle(
+                            color: Colors.black,
+                            decoration: TextDecoration.none,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 1,
+                            wordSpacing: 2,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                      ],
+                    ),
+                  ),
                   // Button
                   Positioned(
                     left: 115,
@@ -157,15 +179,10 @@ class _MemoryThreeScreenState extends State<MemoryThreeScreen> {
   void endGame() {
     countdownTimer!.cancel();
     // displayCountdownTimer!.cancel();
-    _showNotify("Hoàn Thành", "Chúc mừng bạn hoàn thành lượt chơi!", "Tiếp tục",
-        "assets/correct.png", () {
+    _showNotify("Hoàn Thành", "", "Thoát", "assets/correct.png", () {
       Navigator.of(context).pop();
       setState(() {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TestScreen(),
-            ));
+        Navigator.pop(context, back);
       });
     });
   }
@@ -241,7 +258,7 @@ class _MemoryThreeScreenState extends State<MemoryThreeScreen> {
     // Fluttertoast.cancel();
 
     Fluttertoast.showToast(
-      msg: "Không chính xác: +200",
+      msg: "Không chính xác",
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 3,
@@ -398,216 +415,251 @@ class _MemoryThreeScreenState extends State<MemoryThreeScreen> {
     super.dispose();
   }
 
+  bool back = false;
+
+  Future<bool?> showMyDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Bạn có muốn thoát ra ?'),
+          actions: [
+            TextButton(
+              child: Text('Không'),
+              onPressed: () {
+                back = false;
+                Navigator.pop(context, back);
+              },
+            ),
+            TextButton(
+              child: Text('Có'),
+              onPressed: () {
+                back = true;
+                Navigator.pop(context, back);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double screen_width = MediaQuery.of(context).size.width;
     double screen_height = MediaQuery.of(context).size.height;
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xffd23369), Color(0xffff597b)],
-              begin: FractionalOffset(0.5, 1),
-            ),
-          ),
-          width: screen_width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Icons
-              Row(
-                // crossAxisAlignment: CrossAxisAlignment.spaceBetween,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          print("Back Here");
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const HomePage()));
-                        },
-                        icon: const Icon(Icons.arrow_back_ios),
-                        iconSize: 30,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          print("Back Here");
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const HomePage()));
-                        },
-                        icon: const Icon(Icons.lightbulb_outline),
-                        iconSize: 30,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          print("Back Here");
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const HomePage()));
-                        },
-                        icon: const Icon(Icons.settings),
-                        iconSize: 30,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              // Title
-              Container(
-                width: screen_width,
-                // height: screen_height / 4.5,
-                // decoration: const BoxDecoration(
-                //   color: Colors.amber,
-                // ),
-                child: Column(
-                  children: [
-                    Text(
-                      "Lượt chơi: $levels/10",
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        scoreBoard("Thời gian", "${timerDuration.inSeconds}"),
-                        scoreBoard("Điểm", "$score"),
-                      ],
-                    ),
-                  ],
+    return WillPopScope(
+        onWillPop: () async {
+          final back = await showMyDialog(context);
+          return back ?? false;
+        },
+        child: SafeArea(
+          child: Scaffold(
+            body: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xffd23369), Color(0xffff597b)],
+                  begin: FractionalOffset(0.5, 1),
                 ),
               ),
-              // SizedBox(
-              // height:,
-              // ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                    // child: init == false
-                    //     ? Container(
-                    //         child: CircularPercentIndicator(
-                    //           circularStrokeCap: CircularStrokeCap.round,
-                    //           percent: percent / 3,
-                    //           animation: true,
-                    //           animateFromLastPercent: true,
-                    //           radius: 30.0,
-                    //           lineWidth: 5.0,
-                    //           progressColor: Colors.amber,
-                    //           center: Text(
-                    //             "$percent",
-                    //             style:
-                    //                 TextStyle(color: Colors.white, fontSize: 40),
-                    //           ),
-                    //         ),
-                    //       )
-                    //     : Container(),
-                    ),
-              ),
-              // Display Question
-              isLoading
-                  ? Expanded(
-                      flex: 10,
-                      child: getLoading(),
-                    )
-                  : Expanded(
-                      flex: 10,
-                      child: Center(
-                        child: Container(
-                          width: screen_width,
-                          // decoration: BoxDecoration(
-                          //   color: Colors.amber,
-                          // ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              GridView(
-                                shrinkWrap: true,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 4),
-                                children:
-                                    List.generate(roundPairs.length, (index) {
-                                  return Tile(
-                                    imageAssetPath:
-                                        roundPairs[index].getImageAssetPath(),
-                                    parent: this,
-                                    tileIndex: index,
-                                  );
-                                }),
-                              ),
-                              const Divider(
-                                thickness: 3,
-                                color: Colors.black,
-                                endIndent: 30,
-                                indent: 30,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 20, top: 5),
-                                    child: AutoSizeText(
-                                      "Đáp án: ",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        wordSpacing: 2,
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              displayAnswer == false
-                                  ? Container(
-                                      padding: EdgeInsets.all(20),
-                                      // decoration: BoxDecoration(color: Colors.deepOrange),
-                                      child: GridView(
-                                        shrinkWrap: true,
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: numOfCard),
-                                        children: List.generate(remain.length,
-                                            (index) {
-                                          return Tile(
-                                            imageAssetPath: remain[index]
-                                                .getImageAssetPath(),
-                                            parent: this,
-                                            tileIndex: index,
-                                          );
-                                        }),
-                                      ),
-                                    )
-                                  : Container(),
-                            ],
+              width: screen_width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Icons
+                  Row(
+                    // crossAxisAlignment: CrossAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              print("Back Here");
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const HomePage()));
+                            },
+                            icon: const Icon(Icons.arrow_back_ios),
+                            iconSize: 30,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              print("Back Here");
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const HomePage()));
+                            },
+                            icon: const Icon(Icons.lightbulb_outline),
+                            iconSize: 30,
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              print("Back Here");
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const HomePage()));
+                            },
+                            icon: const Icon(Icons.settings),
+                            iconSize: 30,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  // Title
+                  Container(
+                    width: screen_width,
+                    // height: screen_height / 4.5,
+                    // decoration: const BoxDecoration(
+                    //   color: Colors.amber,
+                    // ),
+                    child: Column(
+                      children: [
+                        Text(
+                          "Lượt chơi: $levels/10",
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            scoreBoard(
+                                "Thời gian", "${timerDuration.inSeconds}"),
+                            scoreBoard("Điểm", "$score"),
+                          ],
+                        ),
+                      ],
                     ),
-            ],
+                  ),
+                  // SizedBox(
+                  // height:,
+                  // ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                        // child: init == false
+                        //     ? Container(
+                        //         child: CircularPercentIndicator(
+                        //           circularStrokeCap: CircularStrokeCap.round,
+                        //           percent: percent / 3,
+                        //           animation: true,
+                        //           animateFromLastPercent: true,
+                        //           radius: 30.0,
+                        //           lineWidth: 5.0,
+                        //           progressColor: Colors.amber,
+                        //           center: Text(
+                        //             "$percent",
+                        //             style:
+                        //                 TextStyle(color: Colors.white, fontSize: 40),
+                        //           ),
+                        //         ),
+                        //       )
+                        //     : Container(),
+                        ),
+                  ),
+                  // Display Question
+                  isLoading
+                      ? Expanded(
+                          flex: 10,
+                          child: getLoading(),
+                        )
+                      : Expanded(
+                          flex: 10,
+                          child: Center(
+                            child: Container(
+                              width: screen_width,
+                              // decoration: BoxDecoration(
+                              //   color: Colors.amber,
+                              // ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  GridView(
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 4),
+                                    children: List.generate(roundPairs.length,
+                                        (index) {
+                                      return Tile(
+                                        imageAssetPath: roundPairs[index]
+                                            .getImageAssetPath(),
+                                        parent: this,
+                                        tileIndex: index,
+                                      );
+                                    }),
+                                  ),
+                                  const Divider(
+                                    thickness: 3,
+                                    color: Colors.black,
+                                    endIndent: 30,
+                                    indent: 30,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: const [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 20, top: 5),
+                                        child: AutoSizeText(
+                                          "Đáp án: ",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            wordSpacing: 2,
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  displayAnswer == false
+                                      ? Container(
+                                          padding: EdgeInsets.all(20),
+                                          // decoration: BoxDecoration(color: Colors.deepOrange),
+                                          child: GridView(
+                                            shrinkWrap: true,
+                                            gridDelegate:
+                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: numOfCard),
+                                            children: List.generate(
+                                                remain.length, (index) {
+                                              return Tile(
+                                                imageAssetPath: remain[index]
+                                                    .getImageAssetPath(),
+                                                parent: this,
+                                                tileIndex: index,
+                                              );
+                                            }),
+                                          ),
+                                        )
+                                      : Container(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 

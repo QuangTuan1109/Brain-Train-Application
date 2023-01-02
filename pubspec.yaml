@@ -62,6 +62,8 @@ dependencies:
   get: ^4.6.5
   percent_indicator: ^4.2.2
   flame: ^1.5.0
+  auto_size_text: ^3.0.0
+  flutter_spinkit: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -93,12 +95,17 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/
     - images/
     - assets/gif/
     - lib/data/data_language/question_languages_one.json
     - lib/data/data_language/question_languages_two.json
     - lib/data/data_language/word.json
     - assets/images/
+    - assets/Animal/
+    - assets/Fruit/
+    - assets/Household/
+    - assets/Transportation/
     - assets/images/weapon/
     - assets/images/enemy/
     - assets/weaponParams.json

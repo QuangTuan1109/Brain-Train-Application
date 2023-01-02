@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter_application_1/screens/game/math/Game_Math1_Screen.dart';
 
 import 'package:flutter_application_1/screens/Signin_Screen.dart';
@@ -30,6 +27,13 @@ import 'package:flutter_application_1/screens/game/attention/Attention_Screen.da
 import 'package:flutter_application_1/screens/game/attention/testgame3.dart';
 import 'package:flutter_application_1/screens/game/attention/menu_Level_game3.dart';
 import 'package:flutter_application_1/screens/game/attention/attention_game1.dart';
+
+//memory
+import 'package:flutter_application_1/screens/game/memory/Memory_Screen.dart';
+import 'package:flutter_application_1/screens/game/memory/memory_one_screen.dart';
+import 'package:flutter_application_1/screens/game/memory/memory_two_screen.dart';
+import 'package:flutter_application_1/screens/game/memory/memory_three_screen.dart';
+
 //Admin
 
 import 'package:flutter_application_1/screens/admin/admin_page.dart';
@@ -37,7 +41,6 @@ import 'package:flutter_application_1/screens/admin/admin_page.dart';
 //popup
 
 import 'package:flutter_application_1/screens/setting/Setting_Screen.dart';
-
 
 class RouteGenerator {
   const RouteGenerator._();
@@ -56,6 +59,11 @@ class RouteGenerator {
   static const gameWord = '/gameWord';
   static const gameConj = '/gameConj';
   static const gameSort = '/gameSort';
+  // Memory Game
+  static const memoryScreen = '/memoryScreen';
+  static const gameMemory1 = 'gameMemory1';
+  static const gameMemory2 = 'gameMemory2';
+  static const gameMemory3 = 'gameMemory3';
 
   // Attention Game
   static const game3atte1 = 'game3atte1';
@@ -87,9 +95,14 @@ class RouteGenerator {
     mathScreen: (context) => const MathScreen(),
     gameMath1: (context) => const GameMath1Screen(),
 
-
     //Languages Game
     languageScreen: (context) => const LanguageScreen(),
+    gameMemory1: (context) => const MemoryOneScreen(),
+    gameMemory2: (context) => const MemoryTwoScreen(),
+    gameMemory3: (context) => const MemoryThreeScreen(),
+
+    //Memory Game
+    memoryScreen: (context) => const MemoryScreen(),
     gameLetter: (context) => const LanguagesFirstLetter(),
     gameWord: (context) => const LanguagesFirstWord(),
     gameConj: (context) => const LanguageGameThree(),
@@ -115,6 +128,5 @@ class RouteGenerator {
     admin_page2: (context) => const Adminpage(),
 
     gameMath2: (context) => const GameMath2Screen(),
-
   };
 }

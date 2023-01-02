@@ -150,7 +150,7 @@ class Homepage extends ConsumerWidget {
                     InkWell(
                       onTap: () {
                         Navigator.of(context)
-                            .pushNamed('AppRoute.offlineMultiplayer');
+                            .pushNamed(RouteGenerator.memoryScreen);
                       },
                       child: const CustomStack(
                         image: 'images/memory-background.png',

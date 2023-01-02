@@ -1,35 +1,32 @@
-import '../model/tile_model_one.dart';
+import '../../models/tile_model_one.dart';
 
 bool selected = false;
+// List of source
 List<TileModel> pairs = [];
-
-List<TileModel> quest = [];
-List<TileModel> visiblePairs = [];
-
-List<TileModel> roundPairs = [];
+// List chứa 3 Img đầu tiên
+List<TileModel> getImg = [];
+// List còn lại sau khi lấy 3 Img
 List<TileModel> remain = [];
 
-List<String> exist = [];
+List selectedImageAssetPath = [];
+// String selectedImageAssetPath = '';
+List<int> selectedTileIndex = [];
 
-// int index = 0;
-List<int> index = [];
-var contain;
-
-int levels = 1; // Lượt chơi
-int card = 0;
 int score = 0;
+int bonus = 0;
+int level = 1;
+int tries = 1;
 int numOfCard = 0;
-int responseTime = 0;
-double argTime = 0;
-double bonusScore = 0;
-double totalScore = 0;
-
-// String selectedImageAssetPath = "";
-List<String> selectedImageAssetPath = [];
+int numOfCard_1 = 0;
+int numOfCard_2 = 0;
+int numOfCard_3 = 0;
 
 // Pick Img random
 List<T> pickRandomItemsAsListWithSubList<T>(List<T> items, int count) =>
     (items.toList()..shuffle()).sublist(0, count);
+
+// Use check item exists
+var checkString;
 
 var listOfList = [getPairs(), getPairs_2(), getPairs_3(), getPairs_4()];
 
@@ -296,45 +293,5 @@ List<TileModel> getPairs_4() {
     TileModel(
         imageAssetPath: 'assets/Transportation/50.jpg', isSelected: false),
   ];
-  return pairs;
-}
-
-List<TileModel> getQuestion() {
-  List<TileModel> pairs = [
-    // 1
-    TileModel(
-      imageAssetPath: 'assets/Animal/question.png',
-      isSelected: false,
-    ),
-    TileModel(
-      imageAssetPath: 'assets/Animal/question.png',
-      isSelected: false,
-    ),
-    TileModel(
-      imageAssetPath: 'assets/Animal/question.png',
-      isSelected: false,
-    ),
-    TileModel(
-      imageAssetPath: 'assets/Animal/question.png',
-      isSelected: false,
-    ),
-    TileModel(
-      imageAssetPath: 'assets/Animal/question.png',
-      isSelected: false,
-    ),
-    TileModel(
-      imageAssetPath: 'assets/Animal/question.png',
-      isSelected: false,
-    ),
-    TileModel(
-      imageAssetPath: 'assets/Animal/question.png',
-      isSelected: false,
-    ),
-    TileModel(
-      imageAssetPath: 'assets/Animal/question.png',
-      isSelected: false,
-    ),
-  ];
-
   return pairs;
 }

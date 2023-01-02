@@ -1,14 +1,14 @@
-import 'package:brain_train_memory/data/data_memory_one.dart';
+import 'package:flutter_application_1/data/data_memory/data_memory_two.dart';
 import 'package:flutter/material.dart';
 
-class TestScreen extends StatefulWidget {
-  const TestScreen({super.key});
+class ResultMemoryThree extends StatefulWidget {
+  const ResultMemoryThree({super.key});
 
   @override
-  State<TestScreen> createState() => _TestScreenState();
+  State<ResultMemoryThree> createState() => _ResultMemoryThreeState();
 }
 
-class _TestScreenState extends State<TestScreen> {
+class _ResultMemoryThreeState extends State<ResultMemoryThree> {
   @override
   Widget build(BuildContext context) {
     double screen_width = MediaQuery.of(context).size.width;
@@ -25,7 +25,7 @@ class _TestScreenState extends State<TestScreen> {
                   width: screen_width,
                   height: screen_height / 1.6,
                   decoration: const BoxDecoration(
-                    color: Colors.white, // White
+                    color: Colors.white,
                   ),
                 ),
                 Container(
@@ -33,7 +33,7 @@ class _TestScreenState extends State<TestScreen> {
                   height: screen_height / 1.6,
                   decoration: const BoxDecoration(
                     color: Color(0xFF674AEF),
-                    // color: Colors.amberAccent,
+                    // color: Color(0xffff597b),
                     borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(70),
                     ),
@@ -101,7 +101,7 @@ class _TestScreenState extends State<TestScreen> {
                           child: Column(
                             children: [
                               Text(
-                                "Cấp độ cao nhất của bạn:",
+                                "Số lượt chọn đúng của bạn:",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 20,
@@ -110,9 +110,9 @@ class _TestScreenState extends State<TestScreen> {
                                 ),
                               ),
                               Text(
-                                "$maxLevel",
+                                "$numOfCard",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 25,
                                   decoration: TextDecoration.none,
                                   color: Colors.black,

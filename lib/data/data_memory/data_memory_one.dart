@@ -1,4 +1,4 @@
-import '../model/tile_model_one.dart';
+import '../../models/tile_model_one.dart';
 
 List<TileModel> pairs = [];
 List<TileModel> pairsYellow = [];

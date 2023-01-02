@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:brain_train_memory/data/data_memory_one.dart';
-import 'package:brain_train_memory/test_screen.dart';
-import 'package:brain_train_memory/widget/score_board.dart';
+import 'package:flutter_application_1/data/data_memory/data_memory_one.dart';
+import 'package:flutter_application_1/screens/game/memory/test_screen.dart';
+import 'package:flutter_application_1/widgets/components/score_board.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -409,10 +409,51 @@ class _MemoryOneScreenState extends State<MemoryOneScreen> {
                       ),
                     ),
                   ),
+                  Positioned(
+                    left: 0,
+                    bottom: 45,
+                    child: Column(
+                      children: [
+                        Text(
+                          "Điểm số: $score",
+                          style: TextStyle(
+                            color: Colors.black,
+                            decoration: TextDecoration.none,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 1,
+                            wordSpacing: 2,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 30,
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                "Cấp độ cao nhất của bạn: $maxLevel",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  decoration: TextDecoration.none,
+                                  color: Colors.black.withOpacity(0.8),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   // Button
+
                   Positioned(
                     left: 115,
-                    bottom: 15,
+                    bottom: 5,
                     child: SizedBox(
                       height: 40,
                       width: 120,
@@ -447,181 +488,211 @@ class _MemoryOneScreenState extends State<MemoryOneScreen> {
   void endGame() {
     countdownTimer!.cancel();
     // displayCountdownTimer!.cancel();
-    _showNotify("Hoàn Thành", "Chúc mừng bạn hoàn thành lượt chơi!", "Tiếp tục",
-        "assets/correct.png", () {
+    _showNotify("Hoàn Thành", "", "Thoát", "assets/correct.png", () {
       Navigator.of(context).pop();
       setState(() {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TestScreen(),
-            ));
+        Navigator.pop(context, back);
       });
     });
+  }
+
+  bool back = false;
+
+  Future<bool?> showMyDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Bạn có muốn thoát ra ?'),
+          actions: [
+            TextButton(
+              child: Text('Không'),
+              onPressed: () {
+                back = false;
+                Navigator.pop(context, back);
+              },
+            ),
+            TextButton(
+              child: Text('Có'),
+              onPressed: () {
+                back = true;
+                Navigator.pop(context, back);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     double screen_width = MediaQuery.of(context).size.width;
     double screen_height = MediaQuery.of(context).size.height;
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xffd23369), Color(0xffff597b)],
-              begin: FractionalOffset(0.5, 1),
-            ),
-          ),
-          width: screen_width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Icons
-              Row(
-                // crossAxisAlignment: CrossAxisAlignment.spaceBetween,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          print("Back Here");
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const HomePage()));
-                        },
-                        icon: const Icon(Icons.arrow_back_ios),
-                        iconSize: 30,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          print("Back Here");
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const HomePage()));
-                        },
-                        icon: const Icon(Icons.lightbulb_outline),
-                        iconSize: 30,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          print("Back Here");
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const HomePage()));
-                        },
-                        icon: const Icon(Icons.settings),
-                        iconSize: 30,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              // Title
-              Container(
-                // width: screen_width,
-                // height: screen_height / 4.5,
-                // decoration: const BoxDecoration(
-                //   color: Colors.amber,
-                // ),
-                child: Column(
-                  children: [
-                    Center(
-                      child: Text(
-                        "Cấp độ: $level",
-                        style: const TextStyle(
-                          fontSize: 30,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Center(
-                      child: Text(
-                        "Lượt chơi: $tries/12",
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Color(0xffbbe3f0),
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        scoreBoard("Thời gian", "${timerDuration.inSeconds}"),
-                        scoreBoard("Điểm", "0"),
-                      ],
-                    ),
-                  ],
+    return WillPopScope(
+        onWillPop: () async {
+          final back = await showMyDialog(context);
+          return back ?? false;
+        },
+        child: SafeArea(
+          child: Scaffold(
+            body: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xffd23369), Color(0xffff597b)],
+                  begin: FractionalOffset(0.5, 1),
                 ),
               ),
-              // Display Question
-              Expanded(
-                flex: 1,
-                child: Container(
-                  // decoration: BoxDecoration(color: Colors.blue),
-                  child: init == false
-                      ? Container(
-                          child: CircularPercentIndicator(
-                            circularStrokeCap: CircularStrokeCap.round,
-                            percent: percent / 3,
-                            animation: true,
-                            animateFromLastPercent: true,
-                            radius: 30.0,
-                            lineWidth: 5.0,
-                            progressColor: Colors.amber,
-                            center: Text(
-                              "$percent",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 40),
+              width: screen_width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Icons
+                  Row(
+                    // crossAxisAlignment: CrossAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              print("Back Here");
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const HomePage()));
+                            },
+                            icon: const Icon(Icons.arrow_back_ios),
+                            iconSize: 30,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              print("Back Here");
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const HomePage()));
+                            },
+                            icon: const Icon(Icons.lightbulb_outline),
+                            iconSize: 30,
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              print("Back Here");
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const HomePage()));
+                            },
+                            icon: const Icon(Icons.settings),
+                            iconSize: 30,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  // Title
+                  Container(
+                    // width: screen_width,
+                    // height: screen_height / 4.5,
+                    // decoration: const BoxDecoration(
+                    //   color: Colors.amber,
+                    // ),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: Text(
+                            "Cấp độ: $level",
+                            style: const TextStyle(
+                              fontSize: 30,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        )
-                      : Container(),
-                ),
-              ),
-              Expanded(
-                flex: 5,
-                child: Container(
-                  // decoration: BoxDecoration(color: Colors.deepOrange),
-                  child: GridView(
-                    padding: EdgeInsets.only(
-                        top: 10, left: 20, right: 20, bottom: 10),
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: numOfRow),
-                    children: List.generate(visiblePairs.length, (index) {
-                      return Tile(
-                          imageAssetPath:
-                              visiblePairs[index].getImageAssetPath(),
-                          parent: this,
-                          tileIndex: index);
-                    }),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Center(
+                          child: Text(
+                            "Lượt chơi: $tries/12",
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Color(0xffbbe3f0),
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            scoreBoard(
+                                "Thời gian", "${timerDuration.inSeconds}"),
+                            scoreBoard("Điểm", "0"),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                  // Display Question
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      // decoration: BoxDecoration(color: Colors.blue),
+                      child: init == false
+                          ? Container(
+                              child: CircularPercentIndicator(
+                                circularStrokeCap: CircularStrokeCap.round,
+                                percent: percent / 3,
+                                animation: true,
+                                animateFromLastPercent: true,
+                                radius: 30.0,
+                                lineWidth: 5.0,
+                                progressColor: Colors.amber,
+                                center: Text(
+                                  "$percent",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 40),
+                                ),
+                              ),
+                            )
+                          : Container(),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Container(
+                      // decoration: BoxDecoration(color: Colors.deepOrange),
+                      child: GridView(
+                        padding: EdgeInsets.only(
+                            top: 10, left: 20, right: 20, bottom: 10),
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: numOfRow),
+                        children: List.generate(visiblePairs.length, (index) {
+                          return Tile(
+                              imageAssetPath:
+                                  visiblePairs[index].getImageAssetPath(),
+                              parent: this,
+                              tileIndex: index);
+                        }),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 

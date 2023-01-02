@@ -1,4 +1,4 @@
-import 'package:brain_train_memory/data/data_memory_two.dart';
+import 'package:flutter_application_1/data/data_memory/data_memory_two.dart';
 import 'package:flutter/material.dart';
 
 class ResultMemoryTwo extends StatefulWidget {

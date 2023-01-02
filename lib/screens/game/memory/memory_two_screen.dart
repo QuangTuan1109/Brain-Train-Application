@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:brain_train_memory/result_screen_m2.dart';
+import 'package:flutter_application_1/screens/game/memory/result_screen_m2.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'data/data_memory_two.dart';
+import 'package:flutter_application_1/data/data_memory/data_memory_two.dart';
 
 class MemoryTwoScreen extends StatefulWidget {
   const MemoryTwoScreen({super.key});
@@ -155,6 +155,7 @@ class _MemoryTwoScreenState extends State<MemoryTwoScreen> {
     _showNotify("Điểm: $score", "Số hình đúng: $numOfCard", "Tiếp tục",
         'assets/medal.png', () {
       Navigator.of(context).pop();
+      Navigator.pop(context, back);
       setState(() {
         level++;
         start();
@@ -198,11 +199,7 @@ class _MemoryTwoScreenState extends State<MemoryTwoScreen> {
         "assets/correct.png", () {
       Navigator.of(context).pop();
       setState(() {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ResultMemoryTwo(),
-            ));
+        Navigator.pop(context, back);
       });
     });
   }
@@ -244,130 +241,165 @@ class _MemoryTwoScreenState extends State<MemoryTwoScreen> {
   final double runSpacing = 10;
   final double spacing = 4;
 
+  bool back = false;
+
+  Future<bool?> showMyDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Bạn có muốn thoát ra ?'),
+          actions: [
+            TextButton(
+              child: Text('Không'),
+              onPressed: () {
+                back = false;
+                Navigator.pop(context, back);
+              },
+            ),
+            TextButton(
+              child: Text('Có'),
+              onPressed: () {
+                back = true;
+                Navigator.pop(context, back);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double screen_width = MediaQuery.of(context).size.width;
     final w = (MediaQuery.of(context).size.width - runSpacing * (columns - 1)) /
         columns;
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xffd23369), Color(0xffff597b)],
-              begin: FractionalOffset(0.5, 1),
-            ),
-          ),
-          width: screen_width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Icons
-              Row(
-                // crossAxisAlignment: CrossAxisAlignment.spaceBetween,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return WillPopScope(
+        onWillPop: () async {
+          final back = await showMyDialog(context);
+          return back ?? false;
+        },
+        child: SafeArea(
+          child: Scaffold(
+            body: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xffd23369), Color(0xffff597b)],
+                  begin: FractionalOffset(0.5, 1),
+                ),
+              ),
+              width: screen_width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // Icons
                   Row(
+                    // crossAxisAlignment: CrossAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          print("Back Here");
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const HomePage()));
-                        },
-                        icon: const Icon(Icons.arrow_back_ios),
-                        iconSize: 30,
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              print("Back Here");
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const HomePage()));
+                            },
+                            icon: const Icon(Icons.arrow_back_ios),
+                            iconSize: 30,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              print("Back Here");
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const HomePage()));
+                            },
+                            icon: const Icon(Icons.lightbulb_outline),
+                            iconSize: 30,
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              print("Back Here");
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const HomePage()));
+                            },
+                            icon: const Icon(Icons.settings),
+                            iconSize: 30,
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          print("Back Here");
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const HomePage()));
-                        },
-                        icon: const Icon(Icons.lightbulb_outline),
-                        iconSize: 30,
+                  Expanded(
+                    child: Container(
+                      // decoration: BoxDecoration(color: Colors.amber),
+                      child: Column(
+                        children: [
+                          const Center(
+                            child: Text(
+                              "Lượt chơi:",
+                              style: TextStyle(
+                                fontSize: 30,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              "$level/3",
+                              style: const TextStyle(
+                                fontSize: 30,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      IconButton(
-                        onPressed: () {
-                          print("Back Here");
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const HomePage()));
-                        },
-                        icon: const Icon(Icons.settings),
-                        iconSize: 30,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 9,
+                    child: Center(
+                      child: Container(
+                        // decoration: BoxDecoration(color: Colors.blue),
+                        child: Wrap(
+                          runSpacing: runSpacing,
+                          spacing: spacing,
+                          alignment: WrapAlignment.center,
+                          children: List.generate(getImg.length, (index) {
+                            return Container(
+                              width: w,
+                              height: w,
+                              child: Tile(
+                                  imageAssetPath:
+                                      getImg[index].getImageAssetPath(),
+                                  tileIndex: index,
+                                  parent: this),
+                            );
+                          }),
+                        ),
                       ),
-                    ],
+                    ),
                   ),
                 ],
               ),
-              Expanded(
-                child: Container(
-                  // decoration: BoxDecoration(color: Colors.amber),
-                  child: Column(
-                    children: [
-                      const Center(
-                        child: Text(
-                          "Lượt chơi:",
-                          style: TextStyle(
-                            fontSize: 30,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: Text(
-                          "$level/3",
-                          style: const TextStyle(
-                            fontSize: 30,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 9,
-                child: Center(
-                  child: Container(
-                    // decoration: BoxDecoration(color: Colors.blue),
-                    child: Wrap(
-                      runSpacing: runSpacing,
-                      spacing: spacing,
-                      alignment: WrapAlignment.center,
-                      children: List.generate(getImg.length, (index) {
-                        return Container(
-                          width: w,
-                          height: w,
-                          child: Tile(
-                              imageAssetPath: getImg[index].getImageAssetPath(),
-                              tileIndex: index,
-                              parent: this),
-                        );
-                      }),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 

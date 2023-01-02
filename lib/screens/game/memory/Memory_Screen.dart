@@ -6,6 +6,8 @@ import 'package:flutter_application_1/screens/home/leader.dart';
 import 'package:flutter_application_1/screens/home/stack_custom.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../general/app_route.dart';
+
 class MemoryScreen extends ConsumerWidget {
   const MemoryScreen({Key? key}) : super(key: key);
 
@@ -114,7 +116,8 @@ class MemoryScreen extends ConsumerWidget {
                       padding: const EdgeInsets.only(top: 25),
                       child: InkWell(
                         onTap: () {
-                          Navigator.of(context).pushNamed('AppRoute.levels');
+                          Navigator.of(context)
+                              .pushNamed(RouteGenerator.gameMemory1);
                         },
                         child: const CustomStack(
                           image: 'images/shoping-math-game.jpg',
@@ -131,7 +134,23 @@ class MemoryScreen extends ConsumerWidget {
                     InkWell(
                       onTap: () {
                         Navigator.of(context)
-                            .pushNamed('AppRoute.multiplayerSearch');
+                            .pushNamed(RouteGenerator.gameMemory2);
+                      },
+                      child: const CustomStack(
+                        image: 'images/plus-math-game-background.png',
+                        icon: 'images/plus-math-game-icon.png',
+                        text1: 'Trò Chơi Tìm Tổng',
+                        text2: '4 Trò Chơi',
+                        padding_left: 7,
+                        padding_top: 80,
+                        padding: 28,
+                        color: Color(0xff444444),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed(RouteGenerator.gameMemory3);
                       },
                       child: const CustomStack(
                         image: 'images/plus-math-game-background.png',
