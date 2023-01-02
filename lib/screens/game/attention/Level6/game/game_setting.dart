@@ -83,7 +83,7 @@ class GameSetting {
     mapGrid = mapSize / grid;
     mapGrid =
         // Vector2(mapGrid.x.toInt().toDouble(), mapGrid.y.toInt().toDouble());
-    Vector2(9.toInt().toDouble(), 9.toInt().toDouble());
+        Vector2(10.toInt().toDouble(), 10.toInt().toDouble());
     mapTileSize = dotDivide(mapSize, mapGrid);
   }
 

@@ -122,7 +122,8 @@ class WeaponSettingV1 {
 
       double explosionTimeStep = weaponParam['explosionTimeStep'];
       w.createExpolosionAnimation(expFrame, explosionTimeStep);
-      weapon.add(w);;
+      weapon.add(w);
+      ;
     }
   }
 }

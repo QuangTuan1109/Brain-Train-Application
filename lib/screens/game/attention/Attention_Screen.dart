@@ -134,7 +134,7 @@ class AttentionScreen extends ConsumerWidget {
                     InkWell(
                       onTap: () {
                         Navigator.of(context)
-                            .pushNamed(RouteGenerator.gametest);
+                            .pushNamed(RouteGenerator.game1Atten);
                       },
                       child: const CustomStack(
                         image: 'images/plus-math-game-background.png',

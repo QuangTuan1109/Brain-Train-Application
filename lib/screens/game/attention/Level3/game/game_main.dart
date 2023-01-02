@@ -25,7 +25,7 @@ class GameMain extends FlameGame with HasTappables {
   // StatusBar statusBar;
   // GameUtil util;
   late Timer countDown;
-  int remainingTime = 300;
+  int remainingTime = 120;
   bool timerStarted = false;
 
   GameMain();

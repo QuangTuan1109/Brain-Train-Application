@@ -22,7 +22,7 @@ class EnemyFactory extends GameComponent {
 
   EnemyComponent spawnOneEnemy(EnemyType type) {
     EnemyComponent enemy;
-    var intValue = Random().nextInt(3);
+    var intValue = Random().nextInt(5);
     Vector2 initPosition = gameRef.gameController.gateStart.position;
     enemy = spawnEnemey(initPosition, type);
     gameRef.gameController.add(enemy);
@@ -31,8 +31,12 @@ class EnemyFactory extends GameComponent {
       enemy.moveSmart(gameRef.gameController.gateEnd.position);
     } else if (intValue == 1) {
       enemy.moveSmart(gameRef.gameController.gateEnd2.position);
-    } else if (intValue > 1) {
+    } else if (intValue == 2) {
       enemy.moveSmart(gameRef.gameController.gateEnd3.position);
+    } else if (intValue == 3) {
+      enemy.moveSmart(gameRef.gameController.gateEnd4.position);
+    } else if (intValue > 3) {
+      enemy.moveSmart(gameRef.gameController.gateEnd5.position);
     }
     // enemy.moveSmart(gameRef.gameController.gateEnd.position);
     return enemy;
@@ -40,7 +44,7 @@ class EnemyFactory extends GameComponent {
 
   EnemyComponent spawnOneEnemy2(EnemyType type) {
     EnemyComponent enemy;
-    var intValue = Random().nextInt(3);
+    var intValue = Random().nextInt(5);
     // Vector2 initPosition = gameRef.gameController.gateStart.position;
     Vector2 initPosition2 = gameRef.gameController.gateStart2.position;
     enemy = spawnEnemey(initPosition2, type);
@@ -50,8 +54,12 @@ class EnemyFactory extends GameComponent {
       enemy.moveSmart(gameRef.gameController.gateEnd.position);
     } else if (intValue == 1) {
       enemy.moveSmart(gameRef.gameController.gateEnd2.position);
-    } else if (intValue > 1) {
+    } else if (intValue == 2) {
       enemy.moveSmart(gameRef.gameController.gateEnd3.position);
+    } else if (intValue == 3) {
+      enemy.moveSmart(gameRef.gameController.gateEnd4.position);
+    } else if (intValue > 3) {
+      enemy.moveSmart(gameRef.gameController.gateEnd5.position);
     }
     // enemy.moveSmart(gameRef.gameController.gateEnd2.position);
     return enemy;

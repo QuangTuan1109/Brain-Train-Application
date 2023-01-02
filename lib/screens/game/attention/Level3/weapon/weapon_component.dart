@@ -184,7 +184,7 @@ class WeaponComponent extends GameComponent
           range,
           Paint()
             ..style = PaintingStyle.stroke
-            ..color = Colors.yellow);
+            ..color = Colors.red);
       if (dialogVisible == true) {
         Color? color = buildAllowed ? Colors.blue[200] : Colors.red[200];
         /*build indicator */
@@ -195,7 +195,7 @@ class WeaponComponent extends GameComponent
             range * 1.25,
             Paint()
               ..style = PaintingStyle.stroke
-              ..color = Colors.yellow);
+              ..color = Colors.red);
       }
     }
 

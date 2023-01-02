@@ -101,6 +101,9 @@ flutter:
     - assets/images/enemy/
     - assets/weaponParams.json
     - assets/enemyParams.json
+    - assets/images/Attention/Question/
+    - assets/images/Attention/Solution/
+    - lib/data/data_attention/game_one_attention.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

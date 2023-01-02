@@ -12,6 +12,13 @@ import 'package:flutter_application_1/theme_color/light_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../general/app_route.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:liquid_swipe/Helpers/Helpers.dart';
+import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../../../data/data_onborad/data_languages_1.dart';
+import '../../../general/app_route.dart';
 
 class GameAtte3Level2 extends StatefulWidget {
   const GameAtte3Level2({Key? key}) : super(key: key);
@@ -40,12 +47,64 @@ class _GameAtte3Level2State extends State<GameAtte3Level2> {
               child: Text('Có'),
               onPressed: () {
                 back = true;
-                Navigator.of(context).pushNamed(RouteGenerator.attentionScreen);
+                Navigator.pop(context, back);
               },
             ),
           ],
         );
       },
+    );
+  }
+
+  Future<void> _dialogBuilderTwo(BuildContext context) {
+    final obController = OnBoardingController();
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) => WillPopScope(
+        onWillPop: () async {
+          // final back = await showMyDialog(context);
+          return false;
+        },
+        child: Scaffold(
+          body: Stack(
+            alignment: Alignment.center,
+            children: [
+              LiquidSwipe(
+                pages: obController.pages,
+                enableSideReveal: true,
+                liquidController: obController.controller,
+                onPageChangeCallback: obController.onPageChangedCallback,
+                slideIconWidget: const Icon(Icons.arrow_back_ios),
+                waveType: WaveType.liquidReveal,
+              ),
+              Positioned(
+                top: 50,
+                right: 20,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    // stopTime = false;
+                  },
+                  child:
+                      const Text("Skip", style: TextStyle(color: Colors.grey)),
+                ),
+              ),
+              Obx(
+                () => Positioned(
+                  bottom: 10,
+                  child: AnimatedSmoothIndicator(
+                    count: 3,
+                    activeIndex: obController.currentPage.value,
+                    effect: const ExpandingDotsEffect(
+                      activeDotColor: Color(0xff272727),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -57,7 +116,13 @@ class _GameAtte3Level2State extends State<GameAtte3Level2> {
         final back = await showMyDialog(context);
         return back ?? false;
       },
-      child: Scaffold(
+      child:
+          // WillPopScope(
+          // onWillPop: () async {
+          //   final back = await showMyDialog(context);
+          //   return back ?? false;
+          // },
+          Scaffold(
         body: Container(
           decoration: const BoxDecoration(
             color: LightColors.kLightYellow,
@@ -122,11 +187,11 @@ class _GameAtte3Level2State extends State<GameAtte3Level2> {
                                         children: [
                                           IconButton(
                                             onPressed: () async {
-                                              // final back =
-                                              //     await showMyDialog(context);
-                                              // if (back == true) {
-                                              //   Navigator.pop(context, back);
-                                              // }
+                                              final back =
+                                                  await showMyDialog(context);
+                                              if (back == true) {
+                                                Navigator.pop(context, back);
+                                              }
                                             },
                                             icon: const Icon(
                                               Icons.arrow_circle_left_outlined,
@@ -140,7 +205,7 @@ class _GameAtte3Level2State extends State<GameAtte3Level2> {
                                         children: [
                                           IconButton(
                                             onPressed: () {
-                                              // _dialogBuilderTwo(context);
+                                              _dialogBuilderTwo(context);
                                               // stopTime = true;
                                             },
                                             icon: const Icon(
@@ -189,44 +254,6 @@ class _GameAtte3Level2State extends State<GameAtte3Level2> {
                                           ],
                                         ),
                                       ),
-                                      // Expanded(
-                                      //   flex: 1,
-                                      //   child: Container(
-                                      //     margin: const EdgeInsets.only(
-                                      //       top: 20,
-                                      //       bottom: 20,
-                                      //       left: 20,
-                                      //       right: 20,
-                                      //     ),
-                                      //     padding: const EdgeInsets.symmetric(
-                                      //         vertical: 6, horizontal: 22),
-                                      //     height: 200,
-                                      //     decoration: BoxDecoration(
-                                      //       color: LightColors.kLightYellow,
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(12),
-                                      //     ),
-                                      //     child: Column(
-                                      //       children: [
-                                      //         Padding(
-                                      //           padding: const EdgeInsets.only(
-                                      //             top: 30,
-                                      //             bottom: 10,
-                                      //           ),
-                                      //           child: Text(
-                                      //               "Nhập từ thích hợp bắt đầu bằng chữ  : ",
-                                      //               textAlign: TextAlign.center,
-                                      //               style: const TextStyle(
-                                      //                   fontWeight:
-                                      //                       FontWeight.bold,
-                                      //                   color: Colors.black,
-                                      //                   fontSize: 25)),
-                                      //         ),
-
-                                      //       ],
-                                      //     ),
-                                      //   ),
-                                      // ),
                                     ],
                                   ),
                                 ),
@@ -245,19 +272,6 @@ class _GameAtte3Level2State extends State<GameAtte3Level2> {
       ),
     );
   }
-  // return Expanded(
-  //   child: GameWidget<GameMain>(
-  //     game: game,
-  //     overlayBuilderMap: {
-  //       // "${WeaponViewWidget.name}-0": WeaponViewWidget.builder,
-  //       // "${WeaponViewWidget.name}-1": WeaponViewWidget.builder,
-  //       'start': _pauseMenuBuilder,
-  //       'gameover': _gameOverBuilder,
-  //       'nextlevel': _nextMenuBuilder,
-  //     },
-  //     initialActiveOverlays: const ['start'],
-  //   ),
-  // );
 }
 
 //   @override
@@ -300,6 +314,7 @@ Widget _pauseMenuBuilder(BuildContext buildContext, GameMain game) {
 }
 
 Widget _nextMenuBuilder(BuildContext buildContext, GameMain game) {
+  bool back = false;
   return Center(
       child: Container(
     width: 100,
@@ -315,6 +330,7 @@ Widget _nextMenuBuilder(BuildContext buildContext, GameMain game) {
       onPressed: () {
         // game.start();
         // game.TimerDown();
+        Navigator.pop(buildContext, back);
         game.overlays.remove('nextlevel');
       },
       child: Text('test:${game.remainingTime}'),
@@ -323,7 +339,7 @@ Widget _nextMenuBuilder(BuildContext buildContext, GameMain game) {
 }
 
 Widget _gameOverBuilder(BuildContext buildContext, GameMain game) {
-  // GameTest game = GameTest();
+  bool back = false;
   return Center(
       child: Container(
     width: 100,
@@ -337,7 +353,7 @@ Widget _gameOverBuilder(BuildContext buildContext, GameMain game) {
         textStyle: const TextStyle(fontSize: 20),
       ),
       onPressed: () {
-        Navigator.of(buildContext).pushNamed(RouteGenerator.attentionScreen);
+        Navigator.pop(buildContext, back);
         // game.start();
         // const MaterialApp(home: AppView());
         game.overlays.remove('gameover');

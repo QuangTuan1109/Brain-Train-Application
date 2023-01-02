@@ -28,7 +28,7 @@ class GamebarView extends GameComponent {
   int _killedEnemy = 0;
   int _missedEnemy = 0;
   int _mineCollected = 0;
-  int _lives = 2;
+  int _lives = 300;
 
   @override
   Future<void>? onLoad() {
@@ -45,7 +45,7 @@ class GamebarView extends GameComponent {
       position: (size / 2),
       anchor: Anchor.center,
     );
-    // add(waveStatus);
+    add(waveStatus);
 
     missedStatus = TextComponent(
       textRenderer:
@@ -66,7 +66,7 @@ class GamebarView extends GameComponent {
     timerStatus = TextComponent(
       textRenderer:
           TextPaint(style: const TextStyle(color: Colors.black, fontSize: 12)),
-      position: (size / 2)..x = (size.x * (6 / 8)),
+      position: (size / 2)..x = (size.x * (7 / 8)),
       anchor: Anchor.center,
     );
     add(timerStatus);
@@ -83,8 +83,17 @@ class GamebarView extends GameComponent {
   int get wave => _wave;
   set wave(n) {
     _wave = n;
-    waveStatus.text = 'Wave: $_wave';
+    // waveStatus.text = 'Wave: $_wave';
   }
+
+  // set wave(int n) {
+  //   _missedEnemy = n;
+
+  //   waveStatus.text = 'Lives: ${_lives - _missedEnemy * 20} %';
+  //   if (_lives - _missedEnemy <= 0) {
+  //     gameRef.gameController.send(this, GameControl.GAME_OVER);
+  //   }
+  // }
 
   int get killedEnemy => _killedEnemy;
   set killedEnemy(int n) {
@@ -95,9 +104,9 @@ class GamebarView extends GameComponent {
   int get missedEnemy => _missedEnemy;
   set missedEnemy(int n) {
     _missedEnemy = n;
-
-    missedStatus.text = 'Lives: ${_lives - _missedEnemy}';
-    if (_lives - _missedEnemy <= 0) {
+    waveStatus.text = 'Điểm: ${(_lives - _missedEnemy * 20) * 10}';
+    missedStatus.text = 'Máu: ${_lives - _missedEnemy * 20} %';
+    if (_lives - _missedEnemy * 20 <= 0 || _lives - _missedEnemy * 20 < 240) {
       gameRef.gameController.send(this, GameControl.GAME_OVER);
     }
   }
@@ -105,7 +114,7 @@ class GamebarView extends GameComponent {
   int get remainingTime => _remainingTime;
   set remainingTime(int n) {
     _remainingTime = n;
-    timerStatus.text = 'Time: ${_remainingTime}';
+    timerStatus.text = 'Thời gian: ${_remainingTime} s';
     if (_remainingTime <= 0) {
       gameRef.gameController.send(this, GameControl.GAME_NEXT);
     }
