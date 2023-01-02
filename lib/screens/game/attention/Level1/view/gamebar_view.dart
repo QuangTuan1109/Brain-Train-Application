@@ -40,16 +40,16 @@ class GamebarView extends GameComponent {
     });
 
     waveStatus = TextComponent(
-      textRenderer: TextPaint(
-          style: const TextStyle(color: Colors.white70, fontSize: 22)),
+      textRenderer:
+          TextPaint(style: const TextStyle(color: Colors.black, fontSize: 22)),
       position: (size / 2),
       anchor: Anchor.center,
     );
-    add(waveStatus);
+    // add(waveStatus);
 
     missedStatus = TextComponent(
-      textRenderer: TextPaint(
-          style: const TextStyle(color: Colors.white70, fontSize: 12)),
+      textRenderer:
+          TextPaint(style: const TextStyle(color: Colors.black, fontSize: 12)),
       position: (size / 2)..x = (size.x * (1 / 8)),
       anchor: Anchor.center,
     );
@@ -61,12 +61,12 @@ class GamebarView extends GameComponent {
         // position: (size / 2)..x = (size.x * (3 / 8)),
         // anchor: Anchor.center,
         );
-    add(killedStatus);
+    // add(killedStatus);
 
     timerStatus = TextComponent(
-      textRenderer: TextPaint(
-          style: const TextStyle(color: Colors.white70, fontSize: 12)),
-      position: (size / 2)..x = (size.x * (3 / 8)),
+      textRenderer:
+          TextPaint(style: const TextStyle(color: Colors.black, fontSize: 12)),
+      position: (size / 2)..x = (size.x * (6 / 8)),
       anchor: Anchor.center,
     );
     add(timerStatus);
@@ -74,8 +74,8 @@ class GamebarView extends GameComponent {
     mine = MineView(
         position: (size / 2)..x = (size.x * (6 / 8)),
         size: Vector2(size.y * 1.5, size.y) * 0.7,
-        style: const TextStyle(color: Colors.white70, fontSize: 12));
-    add(mine);
+        style: const TextStyle(color: Colors.black, fontSize: 12));
+    // add(mine);
 
     return super.onLoad();
   }
