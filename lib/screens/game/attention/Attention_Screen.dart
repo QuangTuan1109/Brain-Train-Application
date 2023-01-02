@@ -6,6 +6,8 @@ import 'package:flutter_application_1/screens/home/leader.dart';
 import 'package:flutter_application_1/screens/home/stack_custom.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../general/app_route.dart';
+
 class AttentionScreen extends ConsumerWidget {
   const AttentionScreen({Key? key}) : super(key: key);
 
@@ -114,7 +116,8 @@ class AttentionScreen extends ConsumerWidget {
                       padding: const EdgeInsets.only(top: 25),
                       child: InkWell(
                         onTap: () {
-                          Navigator.of(context).pushNamed('AppRoute.levels');
+                          Navigator.of(context)
+                              .pushNamed(RouteGenerator.levelattengame3);
                         },
                         child: const CustomStack(
                           image: 'images/shoping-math-game.jpg',
@@ -131,7 +134,7 @@ class AttentionScreen extends ConsumerWidget {
                     InkWell(
                       onTap: () {
                         Navigator.of(context)
-                            .pushNamed('AppRoute.multiplayerSearch');
+                            .pushNamed(RouteGenerator.game1Atten);
                       },
                       child: const CustomStack(
                         image: 'images/plus-math-game-background.png',

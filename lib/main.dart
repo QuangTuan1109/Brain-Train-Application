@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_1/provider/auth.dart';
 
 import 'package:flutter_application_1/screens/Signin_Screen.dart';
@@ -11,8 +12,15 @@ import 'general/app_route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   Firebase.initializeApp();
   //runApp(const MyApp());
+
   final sharedPreferences = await SharedPreferences.getInstance();
   runApp(ProviderScope(
     child: MyApp(),

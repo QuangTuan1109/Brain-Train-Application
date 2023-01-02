@@ -116,7 +116,8 @@ class Homepage extends ConsumerWidget {
                       padding: const EdgeInsets.only(top: 25),
                       child: InkWell(
                         onTap: () {
-                          Navigator.of(context).pushNamed('AppRoute.levels');
+                          Navigator.of(context)
+                              .pushNamed(RouteGenerator.languageScreen);
                         },
                         child: const CustomStack(
                           image: 'images/language-background.jpg',
@@ -133,7 +134,7 @@ class Homepage extends ConsumerWidget {
                     InkWell(
                       onTap: () {
                         Navigator.of(context)
-                            .pushNamed('AppRoute.multiplayerSearch');
+                            .pushNamed(RouteGenerator.attentionScreen);
                       },
                       child: const CustomStack(
                         image: 'images/attention-background.png',
