@@ -11,6 +11,7 @@ import 'package:flutter_application_1/models/roomMathGameModel.dart';
 import 'package:flutter_application_1/models/user_model.dart';
 import 'package:flutter_application_1/provider/auth.dart';
 import 'package:flutter_application_1/provider/questions.dart';
+import 'package:flutter_application_1/screens/finish_card.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final roomProvider = ChangeNotifierProvider<RoomNotifier>((ref) {
@@ -62,6 +63,7 @@ class RoomNotifier extends ChangeNotifier {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (seconds == 0) {
         timer.cancel();
+        FinishLevelScreen();
       } else {
         seconds--;
       }

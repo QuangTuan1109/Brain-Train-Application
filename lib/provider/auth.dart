@@ -36,7 +36,6 @@ Future<User?> emailSignin(String email, String password) async {
         .signInWithEmailAndPassword(email: email, password: password);
     return credential.user;
   } on FirebaseAuthException catch (e) {
-    print(e.code);
     if (e.code == 'user-not-found') {
       throw Exception('No user found for that email.');
     } else if (e.code == 'wrong-password') {
@@ -139,7 +138,6 @@ class Auth with ChangeNotifier {
         Gender: Gender,
         DOB: DOB,
       );
-      print(users);
       // await addUserToLeaderboard(users);
 
       notifyListeners();
@@ -149,7 +147,6 @@ class Auth with ChangeNotifier {
       } else if (e.code == 'email-already-in-use') {
         print('Tài khoản đã tồn tại');
       }
-      print(e);
     } catch (e) {
       print(e);
     }
