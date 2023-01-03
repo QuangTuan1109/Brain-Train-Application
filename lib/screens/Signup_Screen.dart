@@ -23,7 +23,8 @@ class SignupScreen extends ConsumerWidget {
                     const SizedBox(height: 25),
                     Container(
                       margin: const EdgeInsets.only(top: 100, bottom: 20),
-                      child: Image.asset('images/logo.jpg', width: 300),
+                      child: Image.asset('images/logo-transparent.png',
+                          width: 300),
                     ),
                     const Text(
                       'Đăng Ký',
