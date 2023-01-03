@@ -753,7 +753,7 @@ class _TileState extends State<Tile> {
               if (numOfChoose == widget.parent.highlight) {
                 print("End Game");
 
-                if (tries < 6) {
+                if (tries < 12) {
                   print("Level đã tăng: $level");
                   print("tries: $tries");
                   // Xử lý tăng giảm Level
