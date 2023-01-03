@@ -155,7 +155,7 @@ class _MemoryTwoScreenState extends State<MemoryTwoScreen> {
     _showNotify("Điểm: $score", "Số hình đúng: $numOfCard", "Tiếp tục",
         'assets/medal.png', () {
       Navigator.of(context).pop();
-      Navigator.pop(context, back);
+      // Navigator.pop(context, back);
       setState(() {
         level++;
         start();
@@ -195,11 +195,13 @@ class _MemoryTwoScreenState extends State<MemoryTwoScreen> {
   }
 
   void endGame() {
-    _showNotify("Điểm: $score", "Số hình đúng: $numOfCard", "Tiếp tục",
+    _showNotify("Điểm: $score", "Số hình đúng: $numOfCard", "Chơi lại",
         "assets/correct.png", () {
       Navigator.of(context).pop();
       setState(() {
-        Navigator.pop(context, back);
+        // start();
+        level = 0;
+        start();
       });
     });
   }
@@ -262,6 +264,7 @@ class _MemoryTwoScreenState extends State<MemoryTwoScreen> {
               onPressed: () {
                 back = true;
                 Navigator.pop(context, back);
+                level = 1;
               },
             ),
           ],

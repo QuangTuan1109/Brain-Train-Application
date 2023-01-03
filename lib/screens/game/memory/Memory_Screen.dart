@@ -155,7 +155,7 @@ class MemoryScreen extends ConsumerWidget {
                       child: const CustomStack(
                         image: 'images/game_memory3.png',
                         icon: 'images/game_memory3.png',
-                        text1: 'Đó là hinhd nào',
+                        text1: 'Đó là hình nào',
                         text2: '4 Trò Chơi',
                         padding_left: 7,
                         padding_top: 80,

@@ -271,6 +271,12 @@ class _MemoryOneScreenState extends State<MemoryOneScreen> {
     pref.setInt("dataMaxLevel", maxLevel);
   }
 
+  //
+  Future<void> getMaxLevel() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.getInt("dataMaxLevel");
+  }
+
   // xác định level trong hàm Reset()
   calLevel() {
     if (numOfWrong == 0) {
