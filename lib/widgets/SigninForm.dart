@@ -110,9 +110,9 @@ class _SigninFormState extends State<SigninForm> {
                   }
 
                   try {
-                    await auth.Signin(SigninMethod.email,
-                        email: emailConntroller.text,
-                        password: passwordConntroller.text);
+                    // await auth.Signin(SigninMethod.email,
+                    //     email: emailConntroller.text,
+                    //     password: passwordConntroller.text);
                     Navigator.of(context).pushNamed('/homepage');
                   } catch (e) {
                     setState(() {

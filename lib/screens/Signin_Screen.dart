@@ -33,15 +33,21 @@ class SigninScreen extends ConsumerWidget {
                           horizontal: 30, vertical: 10),
                       child: Row(
                         children: [
-                          const Text.rich(TextSpan(
-                              text: 'Chưa có tài khoản?',
-                              style: TextStyle(
-                                  color: Colors.black54, fontSize: 16))),
+                          // const Text.rich(TextSpan(
+                          //     text: 'Chưa có tài khoản?',
+                          //     style: TextStyle(
+                          //         color: Colors.black54, fontSize: 16))),
                           IconButtonCus(
                               onPressed: (() {
-                                Navigator.of(context).pushNamed('/homepage');
+                                Navigator.of(context).pushNamed('/admin_page2');
                               }),
-                              text: 'Đăng kí ngay!')
+                              text: 'Admin!'),
+                          IconButtonCus(
+                              onPressed: (() {
+                                Navigator.of(context).pushNamed('/signin');
+                              }),
+                              text: 'Đăng kí ngay!'),
+                          Column()
                         ],
                       ),
                     )
