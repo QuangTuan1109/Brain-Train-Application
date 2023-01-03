@@ -176,7 +176,7 @@ class _AttentionTwoScreenState extends State<AttentionTwoScreen> {
       msg: "Chính xác: +200",
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 3,
+      timeInSecForIosWeb: 1,
       backgroundColor: Colors.green,
       textColor: Colors.white,
       fontSize: 16.0,
@@ -189,7 +189,7 @@ class _AttentionTwoScreenState extends State<AttentionTwoScreen> {
       msg: "Bạn đã chọn hình này!",
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 3,
+      timeInSecForIosWeb: 1,
       backgroundColor: Colors.red,
       textColor: Colors.white,
       fontSize: 16.0,
@@ -352,6 +352,8 @@ class _AttentionTwoScreenState extends State<AttentionTwoScreen> {
     // TODO: implement initState
     super.initState();
     pairs = listOfList[Random().nextInt(4)];
+    score = 0;
+    level = 1;
     start();
   }
 
@@ -444,7 +446,7 @@ class _AttentionTwoScreenState extends State<AttentionTwoScreen> {
                       "Lượt chơi: $level/10",
                       style: TextStyle(
                         fontSize: 30,
-                        color: Colors.black,
+                        color: Colors.white70,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

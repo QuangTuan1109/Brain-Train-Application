@@ -304,6 +304,7 @@ class _MemoryOneScreenState extends State<MemoryOneScreen> {
     tries = 1;
     initGame();
     maxLevel = level;
+    score = 0;
     numOfChoose = 0;
     restart();
   }
@@ -494,7 +495,7 @@ class _MemoryOneScreenState extends State<MemoryOneScreen> {
   void endGame() {
     countdownTimer!.cancel();
     // displayCountdownTimer!.cancel();
-    _showNotify("Hoàn Thành", "", "Thoát", "assets/correct.png", () {
+    _showNotify("Điểm số: $score", "", "Thoát", "assets/correct.png", () {
       Navigator.of(context).pop();
       setState(() {
         Navigator.pop(context, back);
@@ -643,7 +644,7 @@ class _MemoryOneScreenState extends State<MemoryOneScreen> {
                           children: [
                             scoreBoard(
                                 "Thời gian", "${timerDuration.inSeconds}"),
-                            scoreBoard("Điểm", "0"),
+                            scoreBoard("Điểm", "$score"),
                           ],
                         ),
                       ],

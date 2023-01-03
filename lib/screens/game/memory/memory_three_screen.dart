@@ -124,12 +124,13 @@ class _MemoryThreeScreenState extends State<MemoryThreeScreen> {
                     bottom: 45,
                     child: Column(
                       children: [
-                        Text(
-                          "Điểm số: $score",
+                        AutoSizeText(
+                          "Thời gian trung bình ${argTime.toInt()}",
+                          maxLines: 1,
                           style: TextStyle(
                             color: Colors.black,
                             decoration: TextDecoration.none,
-                            fontSize: 25,
+                            fontSize: 20,
                             fontWeight: FontWeight.w600,
                             letterSpacing: 1,
                             wordSpacing: 2,
@@ -179,7 +180,8 @@ class _MemoryThreeScreenState extends State<MemoryThreeScreen> {
   void endGame() {
     countdownTimer!.cancel();
     // displayCountdownTimer!.cancel();
-    _showNotify("Hoàn Thành", "", "Thoát", "assets/correct.png", () {
+    _showNotify(
+        "Điểm số ${totalScore.toInt()}", "", "Thoát", "assets/correct.png", () {
       Navigator.of(context).pop();
       setState(() {
         Navigator.pop(context, back);
@@ -405,6 +407,8 @@ class _MemoryThreeScreenState extends State<MemoryThreeScreen> {
     super.initState();
     pairs = listOfList[Random().nextInt(4)];
     // _isLoading();
+    levels = 1;
+    score = 0;
     start();
   }
 
@@ -831,7 +835,7 @@ class _TileState extends State<Tile> {
           print("responseTime: $responseTime");
           argTime = score / responseTime;
           bonusScore = score / argTime;
-          totalScore = score + bonusScore;
+          totalScore = score + bonusScore.toInt().toDouble();
           print(widget.imageAssetPath);
         }
       },
